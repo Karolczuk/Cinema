@@ -28,8 +28,8 @@ public class User {
     private Integer age;
     private String password;
 
-    @Transient
-    private String passwordConfirmation;
+//    @Transient
+//    private String passwordConfirmation;
 
     @Enumerated(EnumType.STRING)
     private Role role;
