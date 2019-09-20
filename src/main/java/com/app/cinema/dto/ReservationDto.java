@@ -1,6 +1,8 @@
 package com.app.cinema.dto;
 
-
+import com.app.cinema.model.Movie;
+import com.app.cinema.model.Time;
+import com.app.cinema.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReviewDto {
+public class ReservationDto {
 
     private Long id;
-//    private PremiumUserDto premiumUser;
-//    private AdminDto admin;
+    private MovieDto movie;
+    private UserDto user;
+    private TimeDto time;
 
 }

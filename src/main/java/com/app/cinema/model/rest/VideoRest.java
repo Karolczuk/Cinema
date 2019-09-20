@@ -1,19 +1,18 @@
-package com.app.cinema.dto;
-
+package com.app.cinema.model.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReviewDto {
+public class VideoRest {
 
     private Long id;
-//    private PremiumUserDto premiumUser;
-//    private AdminDto admin;
-
+    private List<VideoResult> results;
 }

@@ -1,6 +1,5 @@
 package com.app.cinema.dto;
 
-import com.app.cinema.model.PremiumUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +18,6 @@ public class FamilyCardDto {
     private BigDecimal discount;
     private LocalDateTime expirationDate;
     private BigDecimal price;
-    private PremiumUser premiumUser;
+//    private PremiumUser premiumUser;
 
 }

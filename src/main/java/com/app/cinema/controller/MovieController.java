@@ -45,7 +45,6 @@ public class MovieController {
         System.out.println("--------------------------------");
         System.out.println(headers);
         MovieDto insertedMovie = movieService.add(request.getBody());
-
         return new ResponseEntity<>(
                 Info.<MovieDto>builder().data(insertedMovie).build(),
                 HttpStatus.CREATED);

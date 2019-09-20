@@ -1,12 +1,12 @@
 package com.app.cinema.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 
 @Data
 @AllArgsConstructor
@@ -14,24 +14,27 @@ import javax.persistence.*;
 @Builder
 
 @Entity
-@Table(name = "reviews")
-public class Review {
+@Table(name = "bookings")
+public class Reservation {
 
     @Id
     @GeneratedValue
     private Long id;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "premiumUser_id")
-//    private PremiumUser premiumUser;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 
-
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "admin_id")
-//    private Admin admin;
-
+    @Embedded
+    @Valid
+    private Time time;
 }
+

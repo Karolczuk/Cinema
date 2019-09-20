@@ -21,5 +21,5 @@ public class MovieDto {
     private LocalDateTime releaseDate;
     private BigDecimal price;
     private String description;
-    private Integer age;
+    //private Integer age;
 }

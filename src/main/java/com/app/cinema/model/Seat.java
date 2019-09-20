@@ -11,8 +11,8 @@ import java.util.Set;
 @Builder
 
 @Entity
-@Table(name = "seans")
-public class Seans {
+@Table(name = "seats")
+public class Seat {
 
     @Id
     @GeneratedValue
@@ -22,7 +22,12 @@ public class Seans {
     private Integer rowNumber;
     private Integer roomNumber;
 
-    @OneToMany(mappedBy = "seans")
+    @OneToOne(mappedBy = "seat")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Reservation booking;
+
+    @OneToMany(mappedBy = "seat")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<User> users;

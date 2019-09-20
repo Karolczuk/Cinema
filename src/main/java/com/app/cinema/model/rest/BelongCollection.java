@@ -1,5 +1,4 @@
-package com.app.cinema.dto;
-
+package com.app.cinema.model.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReviewDto {
+public class BelongCollection {
 
     private Long id;
-//    private PremiumUserDto premiumUser;
-//    private AdminDto admin;
-
+    private String name;
+    private String poster_path;
+    private String backdrop_path;
 }

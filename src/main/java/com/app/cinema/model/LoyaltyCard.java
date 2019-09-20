@@ -24,8 +24,14 @@ public class LoyaltyCard {
     private Integer maxTicket;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "premiumUser_id", unique = true)
+    @JoinColumn(name = "user_id", unique = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private PremiumUser premiumUser;
+    private User user;
+
+//    @OneToOne(cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "premiumUser_id", unique = true)
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private PremiumUser premiumUser;
 }

@@ -1,7 +1,5 @@
-package com.app.cinema.dto;
+package com.app.cinema.model.rest;
 
-import com.app.cinema.model.Movie;
-import com.app.cinema.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BookingDto {
+public class Genre {
 
     private Long id;
-    private Movie movie;
-    private User user;
+    private String name;
 }

@@ -27,8 +27,13 @@ public class FamilyCard {
     private BigDecimal price;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "premiumUser_id")
-    private PremiumUser premiumUser;
+    @JoinColumn(name = "user_id")
+    private User user;
+
+//    @ManyToOne(cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "premiumUser_id")
+//    private PremiumUser premiumUser;
+
 
 
 

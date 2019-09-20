@@ -19,6 +19,6 @@ public class SalesStandDto {
 
     private LocalDateTime startDateTime;
     private Integer quantity;
-    private Movie movie;
-    private User user;
+    private MovieDto movie;
+    private UserDto user;
 }

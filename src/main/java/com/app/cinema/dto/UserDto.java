@@ -19,5 +19,8 @@ public class UserDto {
     private Integer age;
     private String password;
     private String passwordConfirmation;
-
+    private SeansDto seansDto;
+    private LoyaltyCardDto loyaltyCardDto;
+    private FamilyCardDto familyCardDto;
+    private ReviewDto reviewDto;
 }

@@ -1,7 +1,6 @@
 package com.app.cinema.model;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,10 +8,10 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
+@Builder
 @Entity
 @Table(name = "users")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
 
     @Id
@@ -42,9 +41,25 @@ public class User {
     @OneToMany(mappedBy = "user")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Set<Booking> bookings;
+    private Set<Reservation> bookings;
+
+    // dodane1 18.09
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Review> reviews;
+
+    @OneToOne(mappedBy = "user")
+    private LoyaltyCard loyaltyCard;
+
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<FamilyCard> familyCards;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "seans_id")
-    private Seans seans;
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
+//   cfr
 }
