@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "loyalty_cards")
 
-public class LoyaltyCard {
+public class Card {
     @Id
     @GeneratedValue
     private Long id;
@@ -23,15 +23,14 @@ public class LoyaltyCard {
     private BigDecimal price;
     private Integer maxTicket;
 
+    @Enumerated(EnumType.STRING)
+    private CardType cardType;
+
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", unique = true)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User user;
 
-//    @OneToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "premiumUser_id", unique = true)
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    private PremiumUser premiumUser;
+
 }

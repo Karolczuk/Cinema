@@ -19,23 +19,6 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-  //  private final PasswordEncoder passwordEncoder;
-
-
-//    public UserDto add (UserDto userDto ) {
-//
-//        if ( userDto == null ) {
-//            throw new AppException("add userDto exception - team object is null");
-//        }
-//
-//
-//        User user = ModelMapper.fromUserDtoToUser(userDto);
-//        UserDto userDto1 = ModelMapper.fromUserToUserDto(user);
-////        return userRepository.save(user);
-//        return userRepository.save(userDto1);
-//
-//    }
-
 
     public UserDto add (UserDto userDto ) {
 
@@ -47,7 +30,7 @@ public class UserService {
         System.out.println(user);
         System.out.println("-------------------- 2 -------------------------");
 
-        user.setRole(Role.ROLE_USER);
+      //  user.setRole(Role.ROLE_USER);
        // user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return ModelMapper.fromUserToUserDto(userRepository.save(user));

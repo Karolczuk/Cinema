@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,7 +22,8 @@ public class UserDto {
     private String password;
     private String passwordConfirmation;
     private SeansDto seansDto;
-    private LoyaltyCardDto loyaltyCardDto;
-    private FamilyCardDto familyCardDto;
+    private CardDto loyaltyCardDto;
     private ReviewDto reviewDto;
+
+    private Set<String> roles;
 }

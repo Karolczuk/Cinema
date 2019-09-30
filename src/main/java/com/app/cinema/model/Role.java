@@ -1,16 +1,29 @@
 package com.app.cinema.model;
 
-public enum Role {
 
-    ROLE_ADMIN("ROLE_ADMIN"), ROLE_USER("ROLE_USER"), ROLE_PREMIUM("ROLE_USER_PREMIUM");
+import lombok.*;
 
-    private String fullName;
+import javax.persistence.*;
+import java.util.Set;
 
-    Role(String fullName) {
-        this.fullName = fullName;
-    }
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "roles")
+public class Role {
 
-    public String getFullName() {
-        return fullName;
-    }
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String name;
+
+    @ManyToMany(mappedBy = "roles")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<User> users;
 }
+
+

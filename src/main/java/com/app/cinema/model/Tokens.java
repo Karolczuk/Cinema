@@ -1,5 +1,4 @@
-package com.app.cinema.dto;
-
+package com.app.cinema.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReviewDto {
-
-    private Long id;
-    private UserDto userDto;
-
+public class Tokens {
+    private String accessToken;
+    private String refreshToken;
 }

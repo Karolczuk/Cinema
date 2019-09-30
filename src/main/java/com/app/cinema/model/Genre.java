@@ -6,28 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "videos")
-public class Video {
+@Table(name = "genres")
+public class Genre {
 
     @Id
     @GeneratedValue
     private Long id;
-
     private String name;
-    private String site;
-    private String keyHash;
-
-    @ManyToOne()
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
-
-
-
-
+    @ManyToMany(mappedBy = "genres")
+    private Set<Movie> movies;
 }

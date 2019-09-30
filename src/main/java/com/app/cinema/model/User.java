@@ -27,11 +27,18 @@ public class User {
     private Integer age;
     private String password;
 
-//    @Transient
-//    private String passwordConfirmation;
+    private String passwordConfirmation;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Role> roles;
 
     @OneToMany(mappedBy = "user")
     @EqualsAndHashCode.Exclude
@@ -43,23 +50,15 @@ public class User {
     @ToString.Exclude
     private Set<Reservation> bookings;
 
-    // dodane1 18.09
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Review> reviews;
 
     @OneToOne(mappedBy = "user")
-    private LoyaltyCard loyaltyCard;
+    private Card loyaltyCard;
 
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<FamilyCard> familyCards;
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
+    private Set<Seat> seats;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
-
-//   cfr
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -35,6 +36,6 @@ public class Reservation {
 
     @Embedded
     @Valid
-    private Time time;
+    private LocalDateTime time;
 }
 

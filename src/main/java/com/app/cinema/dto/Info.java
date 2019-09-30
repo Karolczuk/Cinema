@@ -1,16 +1,15 @@
-package com.app.cinema.dto;
+package com.app.dto;
 
-import com.app.cinema.exceptions.ExceptionInfo;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Info<T> {
-
-    // @Builder.Default
-    T data; // = null;
-
-    // @Builder.Default
-    ExceptionInfo exception; // = null;
+    private T data;
+    private String error;
 }

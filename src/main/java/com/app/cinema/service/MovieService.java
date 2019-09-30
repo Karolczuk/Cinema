@@ -2,9 +2,13 @@ package com.app.cinema.service;
 
 import com.app.cinema.dto.MovieDto;
 import com.app.cinema.exceptions.AppException;
+import com.app.cinema.model.Movie;
 import com.app.cinema.repository.MovieRepository;
 import com.app.cinema.validator.MovieValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,18 +22,19 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
-    public List<MovieDto> findAll() {
-
-        return movieRepository
-                .findAll()
+    public Page<MovieDto> findAll(Pageable pageable) {
+        Page<Movie> moviePage = movieRepository.findAll(pageable);
+        List<MovieDto> movies = moviePage.getContent()
                 .stream()
                 .map(ModelMapper::fromMovieToMovieDto)
                 .collect(Collectors.toList());
+        return new PageImpl<>(movies, moviePage.getPageable(), moviePage.getTotalElements());
     }
+
 
     public MovieDto findOne(Long id) {
 
-        if (  id == null ) {
+        if (id == null) {
             throw new AppException("find one exception - id is null");
         }
 
@@ -40,15 +45,15 @@ public class MovieService {
         return ModelMapper.fromMovieToMovieDto(team);
     }
 
-    public MovieDto add ( MovieDto movieDto ) {
+    public MovieDto add(MovieDto movieDto) {
 
-        if ( movieDto == null ) {
+        if (movieDto == null) {
             throw new AppException("add team exception - team object is null");
         }
 
         var movieValidator = new MovieValidator();
-        var errors = movieValidator.validate( movieDto );
-        if ( movieValidator.hasErrors() ) {
+        var errors = movieValidator.validate(movieDto);
+        if (movieValidator.hasErrors()) {
             throw new AppException(errors.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
         }
 
@@ -57,47 +62,35 @@ public class MovieService {
 
     }
 
-    public MovieDto update ( Long id, MovieDto movieDto ) {
+    public MovieDto update( MovieDto movieDto) {
 
-        if ( id == null ) {
-            throw new AppException("update movie exception - id is null");
-        }
 
-        if ( movieDto == null ) {
+
+        if (movieDto == null) {
             throw new AppException("update movie exception - movie object is null");
         }
 
         var movieValidator = new MovieValidator();
-        var errors = movieValidator.validate( movieDto );
-        if ( movieValidator.hasErrors() ) {
+        var errors = movieValidator.validate(movieDto);
+        if (movieValidator.hasErrors()) {
             throw new AppException(errors.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
         }
 
         var movie = movieRepository
-                .findById(id)
-                .orElseThrow(() -> new AppException("update movie exception - no movie with id " + id));
+                .findById(movieDto.getId())
+                .orElseThrow(() -> new AppException("update movie exception - no movie with id " + movieDto.getId()));
 
         return ModelMapper.fromMovieToMovieDto(movieRepository.save(movie));
 
     }
 
-    public MovieDto deleteById( Long id ) {
+    public void deleteById(Long id) {
 
-        if ( id == null ) {
+        if (id == null) {
             throw new AppException("delete exception - id is null");
         }
 
-        var team = movieRepository
-                .findById(id)
-                .orElseThrow(() -> new AppException("delete exception - no movie with id " + id));
-
-        movieRepository
-                .findAll()
-                .stream()
-                .forEach(movieRepository::save);
-
-        movieRepository.delete(team);
-        return ModelMapper.fromMovieToMovieDto(team);
+        movieRepository.deleteById(id);
 
     }
 

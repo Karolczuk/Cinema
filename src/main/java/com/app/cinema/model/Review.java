@@ -25,13 +25,5 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "premiumUser_id")
-//    private PremiumUser premiumUser;
-
-
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "admin_id")
-//    private Admin admin;
 
 }

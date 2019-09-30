@@ -9,7 +9,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 @Entity
 @Table(name = "seats")
 public class Seat {
@@ -18,18 +17,19 @@ public class Seat {
     @GeneratedValue
     private Long id;
 
-    private Integer seatCount;
+    private Integer columnNumber;
     private Integer rowNumber;
     private Integer roomNumber;
 
     @OneToOne(mappedBy = "seat")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Reservation booking;
+    private Reservation reservation;
 
-    @OneToMany(mappedBy = "seat")
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Set<User> users;
+    private User user;
 
 }

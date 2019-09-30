@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FamilyCardDto {
+public class CardDto {
 
     private Long id;
+
     private BigDecimal discount;
     private LocalDateTime expirationDate;
     private BigDecimal price;
-//    private PremiumUser premiumUser;
-
+    private Integer maxTicket;
 }
