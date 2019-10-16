@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public interface TokenService {
 
-    static Tokens createTokens(Authentication authentication) {
+    public static Tokens createTokens(Authentication authentication) {
         if (authentication == null) {
             throw new AppException("create tokens - authentication object is null");
         }
@@ -27,7 +27,7 @@ public interface TokenService {
                 .build();
     }
 
-    static Tokens createTokensFromRefreshToken(String username, String rolesStr) {
+    public static Tokens createTokensFromRefreshToken(String username, String rolesStr) {
 
         return Tokens.builder()
                 .accessToken(createTokenFromRefreshToken(username, rolesStr, false))
@@ -35,7 +35,7 @@ public interface TokenService {
                 .build();
     }
 
-    static String createToken(Authentication authentication, boolean isRefreshToken) {
+    public static String createToken(Authentication authentication, boolean isRefreshToken) {
 
         String username = authentication.getName();
 
@@ -57,7 +57,7 @@ public interface TokenService {
                 .compact();
     }
 
-    static String createTokenFromRefreshToken(String username, String rolesStr, boolean isRefreshToken) {
+    public static String createTokenFromRefreshToken(String username, String rolesStr, boolean isRefreshToken) {
 
         long expirationTime = TokenSettings.ACCESS_TOKEN_EXPIRATION_TIME;
         if (isRefreshToken) {
@@ -76,14 +76,14 @@ public interface TokenService {
                 .compact();
     }
 
-    static String convertRolesToString(Authentication authentication) {
+    public static String convertRolesToString(Authentication authentication) {
         return authentication.getAuthorities()
                 .stream()
                 .map(auth -> ((GrantedAuthority) auth).getAuthority())
                 .collect(Collectors.joining(","));
     }
 
-    static UsernamePasswordAuthenticationToken parseAccessToken(String accessToken) {
+    public static UsernamePasswordAuthenticationToken parseAccessToken(String accessToken) {
 
         if (accessToken == null) {
             throw new AppException("parse token - access token is null");
@@ -102,15 +102,15 @@ public interface TokenService {
         return new UsernamePasswordAuthenticationToken(username, null, roles);
     }
 
-    static Tokens parseRefreshToken(String refreshToken) {
+    public static Tokens parseRefreshToken(String refreshToken) {
 
         if (refreshToken == null) {
             throw new AppException("parse token - access token is null");
         }
 
-        if (!refreshToken.startsWith(TokenSettings.TOKEN_PREFIX)) {
-            throw new AppException("parse token - access token doesn't start with right prefix");
-        }
+//        if (!refreshToken.startsWith(TokenSettings.TOKEN_PREFIX)) {
+//            throw new AppException("parse token - access token doesn't start with right prefix");
+//        }
 
         if (!isTokenValid(refreshToken)) {
             throw new AppException("parse token - token is not valid");
@@ -152,7 +152,7 @@ public interface TokenService {
         return getClaims(token).getExpiration().after(new Date());
     }
 
-    static boolean hasRole(String token, String role) {
+    public static boolean hasRole(String token, String role) {
         return getRolesAsString(token).contains(role);
     }
 }

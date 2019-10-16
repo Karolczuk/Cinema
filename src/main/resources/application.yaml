@@ -8,12 +8,12 @@ spring:
       ddl-auto: update
 api:
   key: 16209cb29ac8fa4b449f259e5b4263ce
-#api.key =
+# api.key =
 
-#  spring.jpa.hibernate.ddl-auto=update
-#spring.datasource.url=jdbc:mysql://localhost:3306/cinema_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Europe/Warsaw
+# spring.jpa.hibernate.ddl-auto=update
+# spring.datasource.url=jdbc:mysql://localhost:3306/cinema_db?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Europe/Warsaw
 #
-#spring.datasource.username=root
-#spring.datasource.password=root
-#api.key =16209cb29ac8fa4b449f259e5b4263ce
+# spring.datasource.username=root
+# spring.datasource.password=root
+# api.key =16209cb29ac8fa4b449f259e5b4263ce
 

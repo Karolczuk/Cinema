@@ -19,6 +19,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         super(authenticationManager);
     }
 
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -26,7 +27,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             FilterChain chain) throws IOException, ServletException {
 
         String accessToken = request.getHeader(TokenSettings.TOKEN_HEADER);
+        System.out.println("ACCESS TOKEN = " + accessToken);
         if (accessToken != null) {
+            System.out.println("xxxxxx");
             UsernamePasswordAuthenticationToken auth = TokenService.parseAccessToken(accessToken);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }

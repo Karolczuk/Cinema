@@ -3,9 +3,11 @@ package com.app.cinema.service;
 import com.app.cinema.dto.MovieDto;
 import com.app.cinema.dto.ReservationDto;
 import com.app.cinema.dto.UserDto;
+import com.app.cinema.dto.VideoDto;
 import com.app.cinema.model.Movie;
 import com.app.cinema.model.Reservation;
 import com.app.cinema.model.User;
+import com.app.cinema.model.Video;
 
 public interface ModelMapper {
 
@@ -24,6 +26,16 @@ public interface ModelMapper {
                 .description(movieDto.getDescription())
                 .price(movieDto.getPrice())
                 .title(movieDto.getTitle())
+                .build();
+    }
+
+    static VideoDto fromVideoToVideoDto(Video video) {
+        return video == null ? null : VideoDto.builder()
+                .id(video.getId())
+                .name(video.getName())
+                .keyHash(video.getKeyHash())
+                .site(video.getSite())
+                .movie(video.getMovie() == null ? null : fromMovieToMovieDto(video.getMovie()))
                 .build();
     }
 
@@ -55,8 +67,8 @@ public interface ModelMapper {
     static ReservationDto fromReservationToReservationDto(Reservation reservation) {
         return reservation == null ? null : ReservationDto.builder()
                 .id(reservation.getId())
-                .movie(reservation.getMovie() == null ? null: fromMovieToMovieDto(reservation.getMovie()))
-                .user(reservation.getUser() == null ? null : fromUserToUserDto(reservation.getUser()))
+                .movieId(reservation.getMovie().getId())
+                .movieDate(reservation.getTime())
                 .build();
     }
 
@@ -64,8 +76,7 @@ public interface ModelMapper {
     static Reservation fromReservationDtoToReservation(ReservationDto reservationDto) {
         return reservationDto == null ? null : Reservation.builder()
                 .id(reservationDto.getId())
-                .movie(reservationDto.getMovie() == null ? null: fromMovieDtoToMovie(reservationDto.getMovie()))
-                .user(reservationDto.getUser() == null ? null : fromUserDtoToUser(reservationDto.getUser()))
+                .time(reservationDto.getMovieDate())
                 .build();
     }
 

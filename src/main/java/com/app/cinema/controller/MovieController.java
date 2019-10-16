@@ -17,6 +17,7 @@ public class MovieController {
     public Page<MovieDto> findAll(@PathVariable Integer page, @PathVariable Integer size) {
         return movieService.findAll(PageRequest.of(page,size));
 
+
     }
 
     @GetMapping("/{id}")

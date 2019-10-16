@@ -6,6 +6,7 @@ import com.app.cinema.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +18,8 @@ public class ReservationController {
 
 
     @PostMapping
-    public ReservationDto add(ReservationDto reservationDto) {
+    @PreAuthorize("isAuthenticated()") //na ten endpot tylko zalogowni userzi moga
+    public ReservationDto add(@RequestBody ReservationDto reservationDto) {
         return reservationService.add(reservationDto);
 
     }

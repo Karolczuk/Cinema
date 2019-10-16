@@ -26,7 +26,6 @@ public class User {
     private String email;
     private Integer age;
     private String password;
-
     private String passwordConfirmation;
 
 

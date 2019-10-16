@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -34,25 +35,27 @@ public class SecurityService {
             throw new AppException("passwords are not correct!");
         }
 
-        if (registrationUser.getRoles() == null || registrationUser.getRoles().isEmpty()) {
-            throw new AppException("user without roles!");
-        }
+//        if (registrationUser.getRoles() == null || registrationUser.getRoles().isEmpty()) {
+//            throw new AppException("user without roles!");
+//        }
 
         if ( userRepository.findByUsername(registrationUser.getUsername()).isPresent()) {
             throw new AppException("username " + registrationUser.getUsername() + " already exists!");
         }
 
-        var roles = registrationUser
-                .getRoles()
-                .stream()
-                .map(roleName -> roleRepository.findByName(roleName).orElseThrow(() -> new AppException("no role with name " + roleName)))
-                .collect(Collectors.toSet());
+//        var roles = registrationUser
+//                .getRoles()
+//                .stream()
+//                .map(roleName -> roleRepository.findByName(roleName).orElseThrow(() -> new AppException("no role with name " + roleName)))
+//                .collect(Collectors.toSet());
 
         var user = User.builder()
                 .username(registrationUser.getUsername())
                 .password(passwordEncoder.encode(registrationUser.getPassword()))
-                .roles(roles)
+              //  .roles(roles)
                 .build();
+
+        roleRepository.findByName("USER").ifPresent(r->user.setRoles(Collections.singleton(r)));
 
         var insertedUser = userRepository.save(user);
         return "User " + insertedUser.getUsername() + " has been registered";

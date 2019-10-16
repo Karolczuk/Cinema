@@ -1,5 +1,7 @@
 package com.app.cinema.controller;
 
+import com.app.cinema.dto.RefreshTokenData;
+import com.app.cinema.dto.Tokens;
 import com.app.cinema.dto.UserDto;
 import com.app.cinema.service.SecurityService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/security")
@@ -19,5 +22,10 @@ public class SecurityController {
         return com.app.dto.Info.<String>builder()
                 .data(securityService.registerUser(registrationUser))
                 .build();
+    }
+
+    @PostMapping("/refreshToken")
+    public Tokens refreshTokenAction(@RequestBody RefreshTokenData refreshTokenData) {
+        return securityService.generateRefreshToken(refreshTokenData);
     }
 }
