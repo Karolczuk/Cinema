@@ -1,23 +1,21 @@
 package com.app.cinema.dto;
-
-import com.app.cinema.model.Movie;
-import com.app.cinema.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SalesStandDto {
+public class RepertoireDto {
 
     private Long id;
-    private LocalDateTime startDateTime;
-    private Integer quantity;
-    private MovieDto movie;
-    private UserDto user;
+    private Long movieId;
+    private LocalDate date;
+    private LocalTime time;
 }

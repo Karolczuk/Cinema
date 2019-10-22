@@ -1,13 +1,7 @@
 package com.app.cinema.service;
 
-import com.app.cinema.dto.MovieDto;
-import com.app.cinema.dto.ReservationDto;
-import com.app.cinema.dto.UserDto;
-import com.app.cinema.dto.VideoDto;
-import com.app.cinema.model.Movie;
-import com.app.cinema.model.Reservation;
-import com.app.cinema.model.User;
-import com.app.cinema.model.Video;
+import com.app.cinema.dto.*;
+import com.app.cinema.model.*;
 
 public interface ModelMapper {
 
@@ -35,7 +29,23 @@ public interface ModelMapper {
                 .name(video.getName())
                 .keyHash(video.getKeyHash())
                 .site(video.getSite())
-                .movie(video.getMovie() == null ? null : fromMovieToMovieDto(video.getMovie()))
+                //    .movie(video.getMovie() == null ? null : fromMovieToMovieDto(video.getMovie()))
+                .build();
+    }
+
+    static ImageDto fromImageToImageDto(Image image) {
+        return image == null ? null : ImageDto.builder()
+                .id(image.getId())
+                .poster(image.getPoster())
+                .movieDto(image.getMovie() == null ? null : fromMovieToMovieDto(image.getMovie()))
+                .build();
+    }
+
+    static Image fromImageDtoToImage(ImageDto imageDto) {
+        return imageDto == null ? null : Image.builder()
+                .id(imageDto.getId())
+                .poster(imageDto.getPoster())
+                .movie(imageDto.getMovieDto() == null ? null : fromMovieDtoToMovie(imageDto.getMovieDto()))
                 .build();
     }
 
@@ -78,6 +88,72 @@ public interface ModelMapper {
                 .id(reservationDto.getId())
                 .time(reservationDto.getMovieDate())
                 .build();
+    }
+
+    static SeatDto fromSeatToSeatDto(Seat seat) {
+        return seat == null ? null : SeatDto.builder()
+                .id(seat.getId())
+                .columnNumber(seat.getColumnNumber())
+                .rowNumber(seat.getRowNumber())
+                .reservation(seat.getReservation() == null ? null : fromReservationToReservationDto(seat.getReservation()))
+                .user(seat.getUser() == null ? null : fromUserToUserDto(seat.getUser()))
+                //.repertoire(seat.getRepertoire() == null ? null : fromRepertoireToRepertoireDto(seat.getRepertoire()))
+                .build();
+    }
+
+
+    static Seat fromSeatDtoToSeat(SeatDto seatDto) {
+        return seatDto == null ? null : Seat.builder()
+                .id(seatDto.getId())
+                .columnNumber(seatDto.getColumnNumber())
+                .rowNumber(seatDto.getRowNumber())
+                //.repertoire(seatDto.getRepertoire() == null ? null : fromRepertoireDtoToRepertoire(seatDto.getRepertoire()))
+                .user(seatDto.getUser() == null ? null : fromUserDtoToUser(seatDto.getUser()))
+                .reservation(seatDto.getReservation() == null ? null : fromReservationDtoToReservation(seatDto.getReservation()))
+                .build();
+    }
+
+
+    static RepertoireDto fromRepertoireToRepertoireDto(Repertoire repertoire) {
+        return repertoire == null ? null : RepertoireDto.builder()
+                .id(repertoire.getId())
+                .time(repertoire.getTime())
+                .date(repertoire.getDate())
+                .movieId(repertoire.getId())
+                //.movie(repertoire.getMovie() == null ? null : fromMovieToMovieDto(repertoire.getMovie()))
+                // .seat(repertoire.getSeat() == null ? null : fromSeatToSeatDto(repertoire.getSeat()))
+                .build();
+    }
+
+    static Repertoire fromRepertoireDtoToRepertoire(RepertoireDto repertoireDto) {
+        return repertoireDto == null ? null : Repertoire.builder()
+                .id(repertoireDto.getId())
+                .time(repertoireDto.getTime())
+                .date(repertoireDto.getDate())
+           //     .movie(repertoireDto.)
+                //.movieId(repertoireDto.getMovieId())
+                //  .movie(repertoireDto.getMovie() == null ? null : fromMovieDtoToMovie(repertoireDto.getMovie()))
+                //  .seat(repertoireDto.getSeat() == null ? null : fromSeatDtoToSeat(repertoireDto.getSeat()))
+                .build();
+    }
+
+
+    static ReviewDto fromReviewToReviewDto(Review review) {
+        return review == null ? null : ReviewDto.builder()
+                .id(review.getId())
+                .movieId(review.getMovie().getId())
+                .userId(review.getUser().getId())
+                .description(review.getDescription())
+                //.userDto(review.getUser() == null ? null : fromUserToUserDto(review.getUser()))
+                .build();
+    }
+
+    static Review fromReviewDtoToReview(ReviewDto reviewDto) {
+        return reviewDto == null ? null : Review.builder()
+                .id(reviewDto.getId())
+                .description(reviewDto.getDescription())
+                .build();
+
     }
 
 }

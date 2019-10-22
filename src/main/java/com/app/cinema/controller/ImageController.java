@@ -1,8 +1,8 @@
 package com.app.cinema.controller;
 
-import com.app.cinema.dto.VideoDto;
-import com.app.cinema.model.Video;
-import com.app.cinema.service.VideoService;
+import com.app.cinema.dto.ImageDto;
+import com.app.cinema.model.Image;
+import com.app.cinema.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,18 +15,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/videos")
-public class VideoController {
+@RequestMapping("/images")
+public class ImageController {
 
-    private final VideoService videoService;
+    private final ImageService imageService;
 
     @GetMapping("/{movieId}")
-    public List<VideoDto> findVideoByMovie(@PathVariable Long movieId) {
-        return videoService.findVideoByMovieId(movieId);
+    public List<ImageDto> findImageByMovie(@PathVariable Long movieId) {
+        return imageService.findImageByMovieId(movieId);
     }
 
     @GetMapping("/all/{page}/{size}")
-    public Page<VideoDto> findAllVideo(@PathVariable Integer page, @PathVariable Integer size) {
-        return videoService.findAll(PageRequest.of(page, size));
+    public Page<ImageDto> findAll(@PathVariable Integer page, @PathVariable Integer size) {
+        return imageService.findAll(PageRequest.of(page, size));
     }
 }

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class ReviewDto {
 
     private Long id;
-    private UserDto userDto;
-
+    private Long userId;
+    private Long movieId;
+    private String description;
 }

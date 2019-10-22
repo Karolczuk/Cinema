@@ -2,8 +2,10 @@ package com.app.cinema.service;
 
 import com.app.cinema.dto.ReservationDto;
 import com.app.cinema.exceptions.AppException;
+import com.app.cinema.model.Movie;
 import com.app.cinema.model.Reservation;
 import com.app.cinema.model.User;
+import com.app.cinema.repository.MovieRepository;
 import com.app.cinema.repository.ReservationRepository;
 import com.app.cinema.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +27,27 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
+    private final MovieRepository movieRepository;
+
 
     public ReservationDto add(ReservationDto reservationDto) {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Optional<User> optionalUser = userRepository.findByUsername(username);
+        Optional<Movie> optionalMovie = movieRepository.findById(reservationDto.getMovieId());
 
         if (reservationDto == null || !optionalUser.isPresent()) {
             throw new AppException("add reservationDto exception - reservation object is null or user is null");
         }
 
+        if (optionalMovie == null || !optionalMovie.isPresent()) {
+            throw new AppException("add movie exception - movie object is null or movie is null");
+        }
+
         var reservation = ModelMapper.fromReservationDtoToReservation(reservationDto);
         reservation.setUser(optionalUser.get());
+        reservation.setMovie(optionalMovie.get());
         return ModelMapper.fromReservationToReservationDto(reservationRepository.save(reservation));
 
     }

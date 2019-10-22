@@ -18,14 +18,14 @@ public class ReservationController {
 
 
     @PostMapping
-    @PreAuthorize("isAuthenticated()") //na ten endpot tylko zalogowni userzi moga
-    public ReservationDto add(@RequestBody ReservationDto reservationDto) {
+    @PreAuthorize("isAuthenticated()")
+    public ReservationDto addReservation(@RequestBody ReservationDto reservationDto) {
         return reservationService.add(reservationDto);
 
     }
 
     @GetMapping("/{page}/{size}")
-    public Page<ReservationDto> findAll(@PathVariable Integer page, @PathVariable Integer size) {
+    public Page<ReservationDto> findAllReservation(@PathVariable Integer page, @PathVariable Integer size) {
 
         return reservationService.findAll(PageRequest.of(page,size));
 

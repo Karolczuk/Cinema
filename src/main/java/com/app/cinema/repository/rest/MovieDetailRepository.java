@@ -1,11 +1,10 @@
 package com.app.cinema.repository.rest;
 
+import com.app.cinema.model.Image;
 import com.app.cinema.model.Movie;
 import com.app.cinema.model.Video;
-import com.app.cinema.model.rest.Genre;
-import com.app.cinema.model.rest.MovieDetails;
-import com.app.cinema.model.rest.VideoRest;
-import com.app.cinema.model.rest.VideoResult;
+import com.app.cinema.model.rest.*;
+import com.app.cinema.repository.ImageRepository;
 import com.app.cinema.repository.MovieRepository;
 import com.app.cinema.repository.VideoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +29,9 @@ public class MovieDetailRepository {
     @Autowired
     private VideoRepository videoRepository;
 
+    @Autowired
+    private ImageRepository imageRepository;
+
     @Value("api.key")
     private String apiKey;
     @Autowired
@@ -47,6 +49,7 @@ public class MovieDetailRepository {
                         MovieDetails.class);
                 System.out.println(forObject);
 
+
                 Optional<Movie> byTitle = movieRepository.findByTitle(forObject.getTitle());
                 if (!byTitle.isPresent()) {
 
@@ -54,16 +57,7 @@ public class MovieDetailRepository {
                     VideoRest forObject1 = restTemplate.getForObject("http://api.themoviedb.org/3/movie/" + i + "/videos?api_key=16209cb29ac8fa4b449f259e5b4263ce&language=en-US",
                             VideoRest.class);
 
-//                List<Video> videos = forObject1.getResults().stream().map(v -> Video
-//                        .builder()
-//                        .keyHash(v.getKey())
-//                        .name(v.getName())
-//                        .site(v.getSite())
-//                        .build())
-//                        .collect(Collectors.toList());
-
-
-                    System.out.println(forObject1);
+                    System.out.println(forObject);
                     Movie movie = Movie.builder()
                             .description(forObject.getOverview())
                             .genre(forObject.getGenres()
@@ -74,7 +68,6 @@ public class MovieDetailRepository {
                             .releaseDate(forObject.getRelease_date())
                             .duration(forObject.getRuntime())
                             .adult(forObject.getAdult())
-                            //.videos(videos)
                             .build();
 
                     Movie movieDb = movieRepository.save(movie);
@@ -82,13 +75,18 @@ public class MovieDetailRepository {
 
                     List<Video> videos = forObject1.getResults().stream().map(v -> Video
                             .builder()
-                            .keyHash(v.getKey())
+                            .keyHash("https://www.youtube.com/watch?v=" + v.getKey())
                             .name(v.getName())
                             .site(v.getSite())
-                            .movie(movieDb)
+                            //    .movie(movieDb)
                             .build())
                             .collect(Collectors.toList());
                     videoRepository.saveAll(videos);
+
+                    Image images = Image.builder().poster("https://image.tmdb.org/t/p/w200" + forObject.getPoster_path()).movie(movieDb).build();
+
+
+                    imageRepository.save(images);
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);

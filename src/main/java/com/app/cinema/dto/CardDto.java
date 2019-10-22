@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class CardDto {
 
     private Long id;
-
     private BigDecimal discount;
     private LocalDateTime expirationDate;
     private BigDecimal price;

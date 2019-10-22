@@ -3,6 +3,8 @@ package com.app.cinema.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Data
@@ -19,7 +21,8 @@ public class Seat {
 
     private Integer columnNumber;
     private Integer rowNumber;
-    private Integer roomNumber;
+    private LocalTime time;
+    private LocalDate date;
 
     @OneToOne(mappedBy = "seat")
     @EqualsAndHashCode.Exclude
@@ -31,5 +34,6 @@ public class Seat {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User user;
+
 
 }

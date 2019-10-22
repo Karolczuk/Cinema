@@ -24,6 +24,5 @@ public class UserDto {
     private SeansDto seansDto;
     private CardDto loyaltyCardDto;
     private ReviewDto reviewDto;
-
     private Set<String> roles;
 }

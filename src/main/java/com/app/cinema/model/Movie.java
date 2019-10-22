@@ -1,6 +1,7 @@
 package com.app.cinema.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,6 +38,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonBackReference
     private List<Video> videos;
 
     @OneToMany(mappedBy = "movie")
@@ -47,7 +49,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Set<Reservation> bookings;
+    private Set<Reservation> reservations;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -56,4 +58,21 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genres;
+
+    @OneToMany(mappedBy = "movie")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonBackReference
+    private List<Image> images;
+
+    @OneToMany(mappedBy = "movie")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<Repertoire> repertoires;
+
+    @OneToMany(mappedBy = "movie")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<Review> reviews;
 }
+

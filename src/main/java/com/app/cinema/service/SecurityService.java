@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,6 +24,8 @@ public class SecurityService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+
 
     public String registerUser(UserDto registrationUser) {
         if (registrationUser == null) {

@@ -48,7 +48,7 @@ public class MovieService {
     public MovieDto add(MovieDto movieDto) {
 
         if (movieDto == null) {
-            throw new AppException("add team exception - team object is null");
+            throw new AppException("add movie exception - movie object is null");
         }
 
         var movieValidator = new MovieValidator();

@@ -1,4 +1,5 @@
 package com.app.cinema.controller;
+
 import com.app.cinema.dto.MovieDto;
 import com.app.cinema.service.MovieService;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +14,10 @@ public class MovieController {
 
     private final MovieService movieService;
 
+
     @GetMapping("/{page}/{size}")
-    public Page<MovieDto> findAll(@PathVariable Integer page, @PathVariable Integer size) {
-        return movieService.findAll(PageRequest.of(page,size));
-
-
+    public Page<MovieDto> findAllMovie(@PathVariable Integer page, @PathVariable Integer size) {
+        return movieService.findAll(PageRequest.of(page, size));
     }
 
     @GetMapping("/{id}")
@@ -28,9 +28,9 @@ public class MovieController {
     }
 
     @PostMapping
-    public MovieDto add(@RequestBody MovieDto movieDto) {
+    public MovieDto addMovie(@RequestBody MovieDto movieDto) {
 
-        return  movieService.add(movieDto);
+        return movieService.add(movieDto);
     }
 
     @PutMapping()

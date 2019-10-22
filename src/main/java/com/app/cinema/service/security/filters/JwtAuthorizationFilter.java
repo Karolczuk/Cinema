@@ -29,9 +29,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String accessToken = request.getHeader(TokenSettings.TOKEN_HEADER);
         System.out.println("ACCESS TOKEN = " + accessToken);
         if (accessToken != null) {
+
             System.out.println("xxxxxx");
             UsernamePasswordAuthenticationToken auth = TokenService.parseAccessToken(accessToken);
             SecurityContextHolder.getContext().setAuthentication(auth);
+           // chain.doFilter(request, response);
+
         }
         chain.doFilter(request, response);
 

@@ -1,33 +1,26 @@
 package com.app.cinema.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "videos")
-public class Video {
+@Table(name = "images")
+public class Image {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String name;
-    private String site;
-    private String keyHash;
+    private String poster;
 
     @ManyToOne()
     @JoinColumn(name = "movie_id")
-    @JsonManagedReference
+    @JsonManagedReference // nie pozwala zapetlic sie zmiennym
     private Movie movie;
-
 
 }

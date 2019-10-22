@@ -6,6 +6,7 @@ import com.app.cinema.dto.VideoDto;
 import com.app.cinema.model.Movie;
 import com.app.cinema.model.Video;
 import com.app.cinema.repository.VideoRepository;
+import io.swagger.models.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,6 +33,13 @@ public class VideoService {
                 .map(ModelMapper::fromVideoToVideoDto)
                 .collect(Collectors.toList());
         return new PageImpl<>(videos, videoPage.getPageable(), videoPage.getTotalElements());
+    }
+
+    public List<VideoDto> findVideoByMovieId(Long movieId) {
+        return videoRepository.findByMovieId(movieId)
+                .stream()
+                .map(ModelMapper::fromVideoToVideoDto)
+                .collect(Collectors.toList());
     }
 
 }

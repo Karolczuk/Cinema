@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecurityController {
     private final SecurityService securityService;
 
+
     @PostMapping("/register")
     public com.app.dto.Info<String> register(@RequestBody UserDto registrationUser) {
         return com.app.dto.Info.<String>builder()

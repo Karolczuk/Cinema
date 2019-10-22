@@ -21,9 +21,16 @@ public class Review {
     @GeneratedValue
     private Long id;
 
+    @Lob
+    private String description;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 
 
 }

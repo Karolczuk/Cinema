@@ -11,9 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Image {
+public class ImageRest {
 
-    private  Long id;
+    private Long id;
     private List<Poster> posters;
     private List<Backdrop> backdrops;
 }
