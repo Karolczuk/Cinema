@@ -46,10 +46,10 @@ public class Movie {
     @ToString.Exclude
     private Set<SalesStand> salesStands;
 
-    @OneToMany(mappedBy = "movie")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Set<Reservation> reservations;
+//    @OneToMany(mappedBy = "movie")
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Set<Reservation> reservations;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
@@ -74,5 +74,10 @@ public class Movie {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Review> reviews;
+
+//    @OneToMany(mappedBy = "movie")
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Set<Seat> seats;
 }
 

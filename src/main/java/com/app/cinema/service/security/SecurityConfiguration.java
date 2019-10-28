@@ -55,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/repertoire/**").permitAll()
                 .antMatchers("/reviews/**").permitAll()
+                .antMatchers("/seats/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/security/**").permitAll()
@@ -67,7 +68,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-
+                .and()
+                .headers().frameOptions().disable() // dodane
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager()));

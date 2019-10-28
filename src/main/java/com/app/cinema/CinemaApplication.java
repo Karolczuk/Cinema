@@ -1,7 +1,6 @@
 package com.app.cinema;
 
 import com.app.cinema.repository.MovieRepository;
-import com.app.cinema.repository.ReservationRepository;
 import com.app.cinema.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class CinemaApplication implements CommandLineRunner {
 
     private final MovieRepository movieRepository;
-    private final ReservationRepository reservationRepository;
+//    private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
 
 

@@ -3,6 +3,9 @@ package com.app.cinema.service;
 import com.app.cinema.dto.*;
 import com.app.cinema.model.*;
 
+import java.util.HashSet;
+import java.util.stream.Collectors;
+
 public interface ModelMapper {
 
     static MovieDto fromMovieToMovieDto(Movie movie) {
@@ -18,6 +21,7 @@ public interface ModelMapper {
         return movieDto == null ? null : Movie.builder()
                 .id(movieDto.getId())
                 .description(movieDto.getDescription())
+                //  .seats(new HashSet<>())
                 .price(movieDto.getPrice())
                 .title(movieDto.getTitle())
                 .build();
@@ -56,7 +60,8 @@ public interface ModelMapper {
                 .email(user.getEmail())
                 .name(user.getName())
                 .surname(user.getSurname())
-                .password(user.getPassword())
+                .roles(user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet()))
+//                .password(user.getPassword())
                 .username(user.getUsername())
                 .build();
     }
@@ -74,30 +79,30 @@ public interface ModelMapper {
     }
 
 
-    static ReservationDto fromReservationToReservationDto(Reservation reservation) {
-        return reservation == null ? null : ReservationDto.builder()
-                .id(reservation.getId())
-                .movieId(reservation.getMovie().getId())
-                .movieDate(reservation.getTime())
-                .build();
-    }
-
-
-    static Reservation fromReservationDtoToReservation(ReservationDto reservationDto) {
-        return reservationDto == null ? null : Reservation.builder()
-                .id(reservationDto.getId())
-                .time(reservationDto.getMovieDate())
-                .build();
-    }
+//    static ReservationDto fromReservationToReservationDto(Reservation reservation) {
+//        return reservation == null ? null : ReservationDto.builder()
+//                .id(reservation.getId())
+//                .movieId(reservation.getMovie().getId())
+//                .date(reservation.getDate())
+//                .time(reservation.getTime())
+//                // .movieDate(reservation.getTime())
+//                .build();
+//    }
+//
+//
+//    static Reservation fromReservationDtoToReservation(ReservationDto reservationDto) {
+//        return reservationDto == null ? null : Reservation.builder()
+//                .id(reservationDto.getId())
+//                .time(reservationDto.getTime())
+//                .date(reservationDto.getDate())
+//                .build();
+//    }
 
     static SeatDto fromSeatToSeatDto(Seat seat) {
         return seat == null ? null : SeatDto.builder()
                 .id(seat.getId())
                 .columnNumber(seat.getColumnNumber())
                 .rowNumber(seat.getRowNumber())
-                .reservation(seat.getReservation() == null ? null : fromReservationToReservationDto(seat.getReservation()))
-                .user(seat.getUser() == null ? null : fromUserToUserDto(seat.getUser()))
-                //.repertoire(seat.getRepertoire() == null ? null : fromRepertoireToRepertoireDto(seat.getRepertoire()))
                 .build();
     }
 
@@ -107,9 +112,7 @@ public interface ModelMapper {
                 .id(seatDto.getId())
                 .columnNumber(seatDto.getColumnNumber())
                 .rowNumber(seatDto.getRowNumber())
-                //.repertoire(seatDto.getRepertoire() == null ? null : fromRepertoireDtoToRepertoire(seatDto.getRepertoire()))
-                .user(seatDto.getUser() == null ? null : fromUserDtoToUser(seatDto.getUser()))
-                .reservation(seatDto.getReservation() == null ? null : fromReservationDtoToReservation(seatDto.getReservation()))
+                .repertoire(seatDto.getRepertoireDto() == null ? null : fromRepertoireDtoToRepertoire(seatDto.getRepertoireDto()))
                 .build();
     }
 
@@ -119,7 +122,7 @@ public interface ModelMapper {
                 .id(repertoire.getId())
                 .time(repertoire.getTime())
                 .date(repertoire.getDate())
-                .movieId(repertoire.getId())
+                .movieId(repertoire.getMovie().getId())
                 //.movie(repertoire.getMovie() == null ? null : fromMovieToMovieDto(repertoire.getMovie()))
                 // .seat(repertoire.getSeat() == null ? null : fromSeatToSeatDto(repertoire.getSeat()))
                 .build();
@@ -130,9 +133,10 @@ public interface ModelMapper {
                 .id(repertoireDto.getId())
                 .time(repertoireDto.getTime())
                 .date(repertoireDto.getDate())
-           //     .movie(repertoireDto.)
+
+                //     .movie(repertoireDto.)
                 //.movieId(repertoireDto.getMovieId())
-                //  .movie(repertoireDto.getMovie() == null ? null : fromMovieDtoToMovie(repertoireDto.getMovie()))
+                //.movie(repertoireDto.getMovieId() == null ? null : fromMovieDtoToMovie(repertoireDto.getMovieId()))
                 //  .seat(repertoireDto.getSeat() == null ? null : fromSeatDtoToSeat(repertoireDto.getSeat()))
                 .build();
     }

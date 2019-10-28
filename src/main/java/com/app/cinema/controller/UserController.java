@@ -4,6 +4,7 @@ package com.app.cinema.controller;
 import com.app.cinema.dto.UserDto;
 import com.app.cinema.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,11 @@ public class UserController {
     @PostMapping
     public UserDto add(UserDto userDto) {
         return userService.add(userDto);
+    }
+
+    @GetMapping
+    public UserDto getUserData() {
+        return userService.getCurrentUser();
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class RepertoireService {
 
     public List<RepertoireDto> findByMovieIdAndDate(Long movieId, LocalDate date) {
 
-        return repertoireRepository.findByMovieIdAndDate(movieId, date)
+        return repertoireRepository.findByMovieIdAndDateAndTimeAfter(movieId, date, LocalTime.now())
                 .stream()
                 .map(ModelMapper::fromRepertoireToRepertoireDto)
                 .collect(Collectors.toList());

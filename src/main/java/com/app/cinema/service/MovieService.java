@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Temporal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class MovieService {
 
-    private final MovieRepository movieRepository;
+        private final MovieRepository movieRepository;
 
     public Page<MovieDto> findAll(Pageable pageable) {
         Page<Movie> moviePage = movieRepository.findAll(pageable);
@@ -38,11 +39,11 @@ public class MovieService {
             throw new AppException("find one exception - id is null");
         }
 
-        var team = movieRepository
+        var movie = movieRepository
                 .findById(id)
                 .orElseThrow(() -> new AppException("no movie with id " + id));
 
-        return ModelMapper.fromMovieToMovieDto(team);
+        return ModelMapper.fromMovieToMovieDto(movie);
     }
 
     public MovieDto add(MovieDto movieDto) {
@@ -51,11 +52,11 @@ public class MovieService {
             throw new AppException("add movie exception - movie object is null");
         }
 
-        var movieValidator = new MovieValidator();
-        var errors = movieValidator.validate(movieDto);
-        if (movieValidator.hasErrors()) {
-            throw new AppException(errors.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
-        }
+//        var movieValidator = new MovieValidator();
+//        var errors = movieValidator.validate(movieDto);
+//        if (movieValidator.hasErrors()) {
+//            throw new AppException(errors.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
+//        }
 
         var movie = ModelMapper.fromMovieDtoToMovie(movieDto);
         return ModelMapper.fromMovieToMovieDto(movieRepository.save(movie));
@@ -70,16 +71,16 @@ public class MovieService {
             throw new AppException("update movie exception - movie object is null");
         }
 
-        var movieValidator = new MovieValidator();
-        var errors = movieValidator.validate(movieDto);
-        if (movieValidator.hasErrors()) {
-            throw new AppException(errors.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
-        }
+//        var movieValidator = new MovieValidator();
+//        var errors = movieValidator.validate(movieDto);
+//        if (movieValidator.hasErrors()) {
+//            throw new AppException(errors.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
+//        }
 
         var movie = movieRepository
                 .findById(movieDto.getId())
                 .orElseThrow(() -> new AppException("update movie exception - no movie with id " + movieDto.getId()));
-
+ //
         return ModelMapper.fromMovieToMovieDto(movieRepository.save(movie));
 
     }
@@ -93,5 +94,6 @@ public class MovieService {
         movieRepository.deleteById(id);
 
     }
+
 
 }

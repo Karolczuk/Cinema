@@ -1,15 +1,14 @@
 package com.app.cinema.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,5 +28,19 @@ public class Repertoire {
     private LocalTime time;
 
     private LocalDate date;
+
+    @OneToMany(mappedBy = "repertoire")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonBackReference
+    private List<Seat> seats;
+
+    // dodane
+//    @ManyToOne()
+//    @JoinColumn(name = "seat_id")
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Seat seat;
+
 
 }

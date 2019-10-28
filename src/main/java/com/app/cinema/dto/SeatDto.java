@@ -18,10 +18,6 @@ public class SeatDto {
     private Long id;
     private Integer columnNumber;
     private Integer rowNumber;
-    private Integer roomNumber;
-    private ReservationDto reservation;
-    private UserDto user;
-    private RepertoireDto repertoire;
-    private LocalTime time;
-    private LocalDate date;
+    private RepertoireDto repertoireDto;
+
 }

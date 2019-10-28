@@ -43,10 +43,10 @@ public class User {
     @ToString.Exclude
     private Set<SalesStand> salesStands;
 
-    @OneToMany(mappedBy = "user")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Set<Reservation> bookings;
+//    @OneToMany(mappedBy = "user")
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Set<Reservation> bookings;
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
