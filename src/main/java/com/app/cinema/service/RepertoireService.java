@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +52,31 @@ public class RepertoireService {
                 .stream()
                 .map(ModelMapper::fromRepertoireToRepertoireDto)
                 .collect(Collectors.toList());
+    }
+
+    public RepertoireDto update(Long id, RepertoireDto repertoireDto) {
+
+        if (id == null) {
+            throw new AppException("update repertoire exception - id is null");
+        }
+        if (repertoireDto == null) {
+            throw new AppException("update repertoire exception - repertoire object is null");
+        }
+
+        Repertoire repertoire = repertoireRepository
+                .findById(id)
+                .orElseThrow(() -> new AppException("no repertoire with id " + id));
+
+        Movie movie = movieRepository
+                .findById(repertoireDto.getMovieId())
+                .orElseThrow(() -> new AppException("no movie with id " + repertoireDto.getMovieId()));
+
+        repertoire.setMovie(movie);
+
+        repertoire.setDate(repertoireDto.getDate());
+
+        return ModelMapper.fromRepertoireToRepertoireDto(repertoireRepository.save(repertoire));
+
     }
 
 }

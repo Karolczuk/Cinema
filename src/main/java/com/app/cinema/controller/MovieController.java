@@ -33,13 +33,12 @@ public class MovieController {
         return movieService.add(movieDto);
     }
 
-    @PutMapping()
-    public MovieDto update(MovieDto movieDto) {
-        return movieService.update(movieDto);
-
+    @PutMapping("/{id}")
+    public MovieDto update(@PathVariable Long id, @RequestBody MovieDto movieDto) {
+        return movieService.update(id, movieDto);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         movieService.deleteById(id);
     }

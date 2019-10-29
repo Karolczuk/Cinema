@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Objects;
 
@@ -70,4 +71,48 @@ public class SecurityService {
 
         return TokenService.parseRefreshToken(refreshTokenData.getRefreshToken());
     }
+
+
+//    public String saveUserWithToken( User user, String token ) {
+//
+//        if ( user == null ) {
+//            throw new AppException("save user with token - user is null");
+//        }
+//
+//        if ( token == null ) {
+//            throw new AppException("save user with token - token is null");
+//        }
+//
+//        VerificationToken verificationToken = verificationTokenRepository.save(VerificationToken.builder()
+//                .user(user)
+//                .token(token)
+//                .expirationDateTime(LocalDateTime.now().plusMinutes(5))
+//                .build());
+//
+//        return verificationToken.getToken();
+//
+//    }
+//
+//    public void activateUser( String token ) {
+//
+//        if ( token == null ) {
+//            throw new AppException("token is null");
+//        }
+//
+//        VerificationToken verificationToken = verificationTokenRepository
+//                .findByToken(token)
+//                .orElseThrow(() -> new AppException("no user for token " + token));
+//
+//
+//        if ( verificationToken.getExpirationDateTime().isBefore(LocalDateTime.now()) ) {
+//            throw new AppException("token has been expired");
+//        }
+//
+//
+//        User user = verificationToken.getUser();
+//        user.setEnabled(true);
+//
+//        userRepository.save(user);
+//
+//    }
 }

@@ -13,7 +13,9 @@ public interface ModelMapper {
                 .id(movie.getId())
                 .description(movie.getDescription())
                 .price(movie.getPrice())
+                .releaseDate(movie.getReleaseDate())
                 .title(movie.getTitle())
+                .duration(movie.getDuration())
                 .build();
     }
 
@@ -21,9 +23,10 @@ public interface ModelMapper {
         return movieDto == null ? null : Movie.builder()
                 .id(movieDto.getId())
                 .description(movieDto.getDescription())
-                //  .seats(new HashSet<>())
+                .duration(movieDto.getDuration())
                 .price(movieDto.getPrice())
                 .title(movieDto.getTitle())
+                .releaseDate(movieDto.getReleaseDate())
                 .build();
     }
 

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class MovieService {
 
-        private final MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
     public Page<MovieDto> findAll(Pageable pageable) {
         Page<Movie> moviePage = movieRepository.findAll(pageable);
@@ -63,24 +63,24 @@ public class MovieService {
 
     }
 
-    public MovieDto update( MovieDto movieDto) {
+    public MovieDto update(Long id, MovieDto movieDto) {
 
-
-
+        if (id == null) {
+            throw new AppException("update movie exception - id is null");
+        }
         if (movieDto == null) {
             throw new AppException("update movie exception - movie object is null");
         }
 
-//        var movieValidator = new MovieValidator();
-//        var errors = movieValidator.validate(movieDto);
-//        if (movieValidator.hasErrors()) {
-//            throw new AppException(errors.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
-//        }
-
         var movie = movieRepository
-                .findById(movieDto.getId())
-                .orElseThrow(() -> new AppException("update movie exception - no movie with id " + movieDto.getId()));
- //
+                .findById(id)
+                .orElseThrow(() -> new AppException("update movie exception - no movie with id " + id));
+
+        movie.setDescription(movieDto.getDescription());
+        movie.setTitle(movieDto.getTitle());
+        movie.setDuration(movieDto.getDuration());
+        movie.setReleaseDate(movieDto.getReleaseDate());
+
         return ModelMapper.fromMovieToMovieDto(movieRepository.save(movie));
 
     }

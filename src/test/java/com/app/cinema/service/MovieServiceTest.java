@@ -53,11 +53,11 @@ public class MovieServiceTest {
         assertThat(result).isEqualTo(MovieDto.builder().id(2L).title("cats").description("new movie").price(new BigDecimal(23)).build());
     }
 
-    @Test
-    public void shouldReturnUpdatedMovieDto() {
-        MovieDto result = movieService.update(MovieDto.builder().id(1L).title("elephant").description("new movie").price(new BigDecimal(23)).build());
-        assertThat(result).isEqualTo(MovieDto.builder().id(1L).title("elephant").description("new movie").price(new BigDecimal(23)).build());
-    }
+//    @Test
+//    public void shouldReturnUpdatedMovieDto() {
+//        MovieDto result = movieService.update(MovieDto.builder().id(1L).title("elephant").description("new movie").price(new BigDecimal(23)).build());
+//        assertThat(result).isEqualTo(MovieDto.builder().id(1L).title("elephant").description("new movie").price(new BigDecimal(23)).build());
+//    }
 
     @Test(expected = AppException.class)
     public void shouldReturnException() {

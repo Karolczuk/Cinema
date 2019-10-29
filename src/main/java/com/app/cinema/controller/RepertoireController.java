@@ -1,5 +1,6 @@
 package com.app.cinema.controller;
 
+import com.app.cinema.dto.MovieDto;
 import com.app.cinema.dto.RepertoireDto;
 import com.app.cinema.service.RepertoireService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,12 @@ public class RepertoireController {
     @GetMapping("/{movieId}/{date}")
     public List<RepertoireDto> findByMovieIdAndDate(@PathVariable Long movieId, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
         return repertoireService.findByMovieIdAndDate(movieId, date);
+    }
+
+    @PutMapping("/{id}")
+    public RepertoireDto update(@PathVariable Long id, @RequestBody RepertoireDto repertoireDto) {
+        return repertoireService.update(id, repertoireDto);
+
     }
 
 }
