@@ -36,6 +36,9 @@ public class RepertoireService {
         if (optionalMovie.isPresent()) {
             repertoire.setMovie(optionalMovie.get());
         }
+        else{
+            throw  new AppException("Movie Id doesn't exist");
+        }
         return ModelMapper.fromRepertoireToRepertoireDto(repertoireRepository.save(repertoire));
     }
 

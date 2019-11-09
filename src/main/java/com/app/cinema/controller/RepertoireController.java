@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -31,8 +32,9 @@ public class RepertoireController {
 
 
     @GetMapping("/{movieId}/{date}")
-    public List<RepertoireDto> findByMovieIdAndDate(@PathVariable Long movieId, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
-        return repertoireService.findByMovieIdAndDate(movieId, date);
+    public List<RepertoireDto> findByMovieIdAndDate(@PathVariable Long movieId, @PathVariable/* @DateTimeFormat(pattern = "dd-MM-yyyy")*/ String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+        return repertoireService.findByMovieIdAndDate(movieId, LocalDate.parse(date,formatter));
     }
 
     @PutMapping("/{id}")

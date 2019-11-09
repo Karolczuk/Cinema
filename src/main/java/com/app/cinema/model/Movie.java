@@ -25,8 +25,8 @@ public class Movie {
     private Long id;
 
     private String title;
-    @ElementCollection
-    private List<String> genre;
+//    @ElementCollection
+//    private List<String> genre;
     private Integer duration;
     private LocalDate releaseDate;
     private BigDecimal price;
@@ -51,13 +51,9 @@ public class Movie {
 //    @ToString.Exclude
 //    private Set<Reservation> reservations;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "genres_movies",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
-    private Set<Genre> genres;
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinTable
+    private List<Genre> genres;
 
     @OneToMany(mappedBy = "movie")
     @EqualsAndHashCode.Exclude
@@ -75,9 +71,5 @@ public class Movie {
     @ToString.Exclude
     private Set<Review> reviews;
 
-//    @OneToMany(mappedBy = "movie")
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    private Set<Seat> seats;
 }
 

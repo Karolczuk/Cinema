@@ -16,9 +16,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class CinemaApplication implements CommandLineRunner {
 
-    private final MovieRepository movieRepository;
-//    private final ReservationRepository reservationRepository;
-    private final UserRepository userRepository;
+//    private final MovieRepository movieRepository;
+////    private final ReservationRepository reservationRepository;
+//    private final UserRepository userRepository;
 
 
     public static void main(String[] args) {

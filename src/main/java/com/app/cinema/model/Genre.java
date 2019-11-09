@@ -1,11 +1,9 @@
 package com.app.cinema.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -17,9 +15,10 @@ import java.util.Set;
 public class Genre {
 
     @Id
-    @GeneratedValue
+//    @GeneratedValue // Rest sam wygneruje Id
     private Long id;
     private String name;
-    @ManyToMany(mappedBy = "genres")
-    private Set<Movie> movies;
+//    @ManyToMany(mappedBy = "genres")
+//    @EqualsAndHashCode.Exclude
+//    private List<Movie> movies;
 }

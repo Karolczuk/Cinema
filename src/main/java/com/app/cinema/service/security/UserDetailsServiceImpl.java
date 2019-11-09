@@ -43,10 +43,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new AppException("roles collection is null");
         }
 
-        final String PREFIX = "ROLE_";
+//        final String PREFIX = "ROLE_";
         return roles
                 .stream()
-                .map(role -> new SimpleGrantedAuthority(PREFIX + role.getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
     }
 }

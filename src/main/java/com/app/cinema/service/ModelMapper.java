@@ -16,6 +16,8 @@ public interface ModelMapper {
                 .releaseDate(movie.getReleaseDate())
                 .title(movie.getTitle())
                 .duration(movie.getDuration())
+                .genres(movie.getGenres().stream().map(g->g.getName()).collect(Collectors.toSet()))
+               // .discoverDto(movie.getDiscoverModel() == null ? null : fromDiscoverToDiscoverDto(movie.getDiscoverModel()))
                 .build();
     }
 
@@ -27,6 +29,7 @@ public interface ModelMapper {
                 .price(movieDto.getPrice())
                 .title(movieDto.getTitle())
                 .releaseDate(movieDto.getReleaseDate())
+          //      .discoverModel(movieDto.getDiscoverDto() == null ? null : fromDiscoverDtoToDiscover(movieDto.getDiscoverDto()))
                 .build();
     }
 
@@ -36,7 +39,7 @@ public interface ModelMapper {
                 .name(video.getName())
                 .keyHash(video.getKeyHash())
                 .site(video.getSite())
-                //    .movie(video.getMovie() == null ? null : fromMovieToMovieDto(video.getMovie()))
+                .movie(video.getMovie() == null ? null : fromMovieToMovieDto(video.getMovie()))
                 .build();
     }
 
@@ -162,5 +165,23 @@ public interface ModelMapper {
                 .build();
 
     }
+
+//    static DiscoverModel fromDiscoverDtoToDiscover(DiscoverDto discoverDto) {
+//        return discoverDto == null ? null : DiscoverModel.builder()
+//                .id(discoverDto.getId())
+//                .page(discoverDto.getPage())
+//                .total_pages(discoverDto.getTotal_pages())
+//                .total_results(discoverDto.getTotal_results())
+//                .build();
+//    }
+//
+//    static DiscoverDto fromDiscoverToDiscoverDto(DiscoverModel discover) {
+//        return discover == null ? null : DiscoverDto.builder()
+//                .id(discover.getId())
+//                .page(discover.getPage())
+//                .total_pages(discover.getTotal_pages())
+//                .total_results(discover.getTotal_results())
+//                .build();
+//    }
 
 }

@@ -41,4 +41,6 @@ public class MovieDetails {
     private Boolean video;
     private Double vote_average;
     private Integer vote_count;
+
+    private List<Long> genre_ids;
 }

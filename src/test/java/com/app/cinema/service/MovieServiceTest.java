@@ -24,7 +24,6 @@ public class MovieServiceTest {
     private MovieRepository movieRepository;
 
     @InjectMocks
-
     private MovieService movieService;
 
     @Before
@@ -34,9 +33,16 @@ public class MovieServiceTest {
                 .id(1L)
                 .build()));
 
+        Mockito.when(movieRepository.findById(3L)).thenReturn(Optional.of(Movie
+                .builder()
+                .id(3L)
+                .build()));
+
         Mockito.when(movieRepository.save(Movie.builder().id(2L).title("cats").description("new movie").price(new BigDecimal(23)).build())).thenReturn(Movie.builder().id(2L).title("cats").description("new movie").price(new BigDecimal(23)).build());
 
         Mockito.when(movieRepository.save(Movie.builder().id(1L).title("cats").description("new movie").price(new BigDecimal(23)).build())).thenReturn(Movie.builder().id(1L).title("cats").description("new movie").price(new BigDecimal(23)).build());
+
+        Mockito.when(movieRepository.save(Movie.builder().id(3L).title("elephant").description("new movie").price(new BigDecimal(23)).build())).thenReturn(Movie.builder().id(1L).title("elephant").description("new movie").price(new BigDecimal(23)).build());
 
 
     }
@@ -53,12 +59,6 @@ public class MovieServiceTest {
         assertThat(result).isEqualTo(MovieDto.builder().id(2L).title("cats").description("new movie").price(new BigDecimal(23)).build());
     }
 
-//    @Test
-//    public void shouldReturnUpdatedMovieDto() {
-//        MovieDto result = movieService.update(MovieDto.builder().id(1L).title("elephant").description("new movie").price(new BigDecimal(23)).build());
-//        assertThat(result).isEqualTo(MovieDto.builder().id(1L).title("elephant").description("new movie").price(new BigDecimal(23)).build());
-//    }
-
     @Test(expected = AppException.class)
     public void shouldReturnException() {
         movieService.deleteById(null);
@@ -70,6 +70,15 @@ public class MovieServiceTest {
         assertThat(throwable).isInstanceOf(AppException.class).hasMessage("delete exception - id is null");
     }
 
+    @Test()
+    public void shoulnMovieDto() {
+        movieService.deleteById(1L);
+        Throwable throwable = catchThrowable(() -> movieService.findOne(10L));
+        assertThat(throwable).isInstanceOf(AppException.class);
+    }
+
 
 }
 
+
+// w jedenym tesdcie nie mofe uruchamiac 2 metod z serwosu
