@@ -5,6 +5,10 @@ import com.app.cinema.dto.TemplateDto;
 import com.app.cinema.exceptions.AppException;
 import com.app.cinema.model.Template;
 import com.app.cinema.repository.TemplateRepository;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.html.simpleparser.HTMLWorker;
+import com.itextpdf.text.pdf.PdfWriter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.StringReader;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +36,20 @@ public class TemplateService {
     public byte[] generateTicket(Long reservationId) {
         Template ticket = templateRepository.findByName("TICKET");
         Context context = new Context();
+        context.setVariable("name", "Pies");
         String process = templateEngine.process(ticket.getBody(), context);
-        return process.getBytes();
+        Document document = new Document(); // do generowai pdf
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            PdfWriter.getInstance(document, byteArrayOutputStream);
+            document.open();
+            HTMLWorker htmlWorker = new HTMLWorker(document);
+            htmlWorker.parse(new StringReader(process));
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
     public Page<TemplateDto> findAll(Pageable pageable) {
@@ -58,7 +77,8 @@ public class TemplateService {
     public TemplateDto add(TemplateDto templateDto) {
 
         if (templateDto == null) {
-            throw new AppException("add template exception - template object is null");
+            throw new AppException("add template exception - template object is null"
+            );
         }
         var template = ModelMapper.fromTemplateDtoToTemplate(templateDto);
         return ModelMapper.fromTemplateToTemplateDto(templateRepository.save(template));

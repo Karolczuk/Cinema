@@ -82,4 +82,10 @@ public class RepertoireService {
 
     }
 
+    public List<RepertoireDto> findByMovieIdsAndDate(List<Long> movieIds, LocalDate date) {
+        return repertoireRepository.findByMovieIdInAndDateAndTimeAfter(movieIds,date, LocalTime.now())
+                .stream()
+                .map(ModelMapper::fromRepertoireToRepertoireDto)
+                .collect(Collectors.toList());
+    }
 }

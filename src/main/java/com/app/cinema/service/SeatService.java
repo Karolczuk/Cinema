@@ -45,21 +45,27 @@ public class SeatService {
         //        List<Reservation> optionalReservations = reservationRepository.findByTimeAndDateAndMovieId(seatDto.getTime(), seatDto.getDate(), seatDto.getMovieId());
 //        var seat = ModelMapper.fromSeatDtoToSeat(seatDto);
         Optional<Repertoire> byId = repertoireRepository.findById(seatDto.getRepertoireDto().getId());
+        boolean present = byId.isPresent();
+
+//        if (byId.isPresent()) {
+//            byId.get();
+//            Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(LocalDate.parse(seatDto.getRepertoireDto().getDate(), formatter), seatDto.getRepertoireDto().getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), seatDto.getRepertoireDto().getMovieId());
 
 
         Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(LocalDate.parse(seatDto.getRepertoireDto().getDate(),formatter), seatDto.getRepertoireDto().getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), seatDto.getRepertoireDto().getMovieId());
-        if (optionalSeat.isPresent()) {
-            throw new AppException("Someone reserved this seat");
-        }
-        var seat = ModelMapper.fromSeatDtoToSeat(seatDto);
+            if (optionalSeat.isPresent()) {
+                throw new AppException("Someone reserved this seat");
+            }
+            var seat = ModelMapper.fromSeatDtoToSeat(seatDto);
 
-        Optional<User> optionalUser = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());// pobieamy nazwe uzytkownika z kontejstu security, kontext security - kontekst w ktorym przetrzymuje akualnego uzytkownika ktory przedtswił sie tokenem
-        if (!optionalUser.isPresent()){
-            throw new AppException("User doe not exist");
-        }
-        seat.setUser(optionalUser.get());
-        return ModelMapper.fromSeatToSeatDto(seatRepository.save(seat));
-
+            Optional<User> optionalUser = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());// pobieamy nazwe uzytkownika z kontejstu security, kontext security - kontekst w ktorym przetrzymuje akualnego uzytkownika ktory przedtswił sie tokenem
+            if (!optionalUser.isPresent()) {
+                throw new AppException("User doe not exist");
+            }
+            seat.setUser(optionalUser.get());
+            return ModelMapper.fromSeatToSeatDto(seatRepository.save(seat));
+//        }
+//        throw new AppException("Repertoire doesn' exist");
     }
 
     public List<SeatDto> findAll(LocalDate date, String time, Long movieId) {

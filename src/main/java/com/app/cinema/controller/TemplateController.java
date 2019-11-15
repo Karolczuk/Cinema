@@ -45,11 +45,12 @@ public class TemplateController {
     @PostMapping("/download")
     public ResponseEntity<byte[]> downloadFile(@RequestBody TemplateDto templateDto) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("Content-Type", "application/html");
+        httpHeaders.set("Content-Type", "application/pdf");
         byte[] bytes = templateService.generateTicket(1L);
         httpHeaders.set("Content-Length", String.valueOf(bytes.length));
-        httpHeaders.set("Content-Disposition", "attachment;filename = ticket");
+        httpHeaders.set("Content-Disposition", "attachment;filename=ticket.pdf");
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.CREATED);
     }
 
 }
+

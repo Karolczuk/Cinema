@@ -13,5 +13,7 @@ public interface RepertoireRepository extends JpaRepository<Repertoire, Long> {
     List<Repertoire> findByMovieId(Long movieId);
     List<Repertoire> findByMovieIdAndDate(Long movieId, LocalDate date);
     List<Repertoire> findByMovieIdAndDateAndTimeAfter(Long movieId, LocalDate date, LocalTime time);
+    List<Repertoire> findByMovieIdInAndDateAndTimeAfter(List<Long>movieIds,LocalDate date, LocalTime time);
 
 }
+
