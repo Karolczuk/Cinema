@@ -3,10 +3,14 @@ package com.app.cinema.service;
 import com.app.cinema.dto.*;
 import com.app.cinema.model.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public interface ModelMapper {
+
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
 
     static MovieDto fromMovieToMovieDto(Movie movie) {
         return movie == null ? null : MovieDto.builder()
@@ -16,8 +20,8 @@ public interface ModelMapper {
                 .releaseDate(movie.getReleaseDate())
                 .title(movie.getTitle())
                 .duration(movie.getDuration())
-                .genres(movie.getGenres().stream().map(g->g.getName()).collect(Collectors.toSet()))
-               // .discoverDto(movie.getDiscoverModel() == null ? null : fromDiscoverToDiscoverDto(movie.getDiscoverModel()))
+                .genres(movie.getGenres().stream().map(g -> g.getName()).collect(Collectors.toSet()))
+                // .discoverDto(movie.getDiscoverModel() == null ? null : fromDiscoverToDiscoverDto(movie.getDiscoverModel()))
                 .build();
     }
 
@@ -29,7 +33,7 @@ public interface ModelMapper {
                 .price(movieDto.getPrice())
                 .title(movieDto.getTitle())
                 .releaseDate(movieDto.getReleaseDate())
-          //      .discoverModel(movieDto.getDiscoverDto() == null ? null : fromDiscoverDtoToDiscover(movieDto.getDiscoverDto()))
+                //      .discoverModel(movieDto.getDiscoverDto() == null ? null : fromDiscoverDtoToDiscover(movieDto.getDiscoverDto()))
                 .build();
     }
 
@@ -127,7 +131,7 @@ public interface ModelMapper {
         return repertoire == null ? null : RepertoireDto.builder()
                 .id(repertoire.getId())
                 .time(repertoire.getTime())
-                .date(repertoire.getDate())
+                .date(repertoire.getDate().toString())
                 .movieId(repertoire.getMovie().getId())
                 //.movie(repertoire.getMovie() == null ? null : fromMovieToMovieDto(repertoire.getMovie()))
                 // .seat(repertoire.getSeat() == null ? null : fromSeatToSeatDto(repertoire.getSeat()))
@@ -138,7 +142,7 @@ public interface ModelMapper {
         return repertoireDto == null ? null : Repertoire.builder()
                 .id(repertoireDto.getId())
                 .time(repertoireDto.getTime())
-                .date(repertoireDto.getDate())
+                .date(LocalDate.parse(repertoireDto.getDate(),formatter))
 
                 //     .movie(repertoireDto.)
                 //.movieId(repertoireDto.getMovieId())
@@ -166,22 +170,20 @@ public interface ModelMapper {
 
     }
 
-//    static DiscoverModel fromDiscoverDtoToDiscover(DiscoverDto discoverDto) {
-//        return discoverDto == null ? null : DiscoverModel.builder()
-//                .id(discoverDto.getId())
-//                .page(discoverDto.getPage())
-//                .total_pages(discoverDto.getTotal_pages())
-//                .total_results(discoverDto.getTotal_results())
-//                .build();
-//    }
-//
-//    static DiscoverDto fromDiscoverToDiscoverDto(DiscoverModel discover) {
-//        return discover == null ? null : DiscoverDto.builder()
-//                .id(discover.getId())
-//                .page(discover.getPage())
-//                .total_pages(discover.getTotal_pages())
-//                .total_results(discover.getTotal_results())
-//                .build();
-//    }
+    static Template fromTemplateDtoToTemplate(TemplateDto templateDto) {
+        return templateDto == null ? null : Template.builder()
+                .id(templateDto.getId())
+                .body(templateDto.getBody())
+                .name(templateDto.getName())
+                .build();
+    }
+
+    static TemplateDto fromTemplateToTemplateDto(Template template) {
+        return template == null ? null : TemplateDto.builder()
+                .id(template.getId())
+                .body(template.getBody())
+                .name(template.getName())
+                .build();
+    }
 
 }

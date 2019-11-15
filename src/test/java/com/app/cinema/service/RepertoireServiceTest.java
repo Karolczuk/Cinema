@@ -68,22 +68,22 @@ public class RepertoireServiceTest {
         );
     }
 
-    @Test
-    public void shouldReturnRepertoireDto() {
-        Throwable throwable = catchThrowable(() -> repertoireService.add(RepertoireDto.builder().id(1L).date(LocalDate.of(1992, 3, 2)).time(LocalTime.of(12, 12))
-                .movieId(5L)
-                .build()));
-        assertThat(throwable).isInstanceOf(AppException.class);
-    }
-
-    @Test
-    public void shouldReturnExceptionWhenMovieIdNotexist() {
-        RepertoireDto result = repertoireService.add(RepertoireDto.builder().id(1L).date(LocalDate.of(1992, 3, 2)).time(LocalTime.of(12, 12))
-                .movieId(6L)
-                .build());
-
-        assertThat(result).isEqualTo(RepertoireDto.builder().id(1L).date(LocalDate.of(1992, 3, 2)).time(LocalTime.of(12, 12)).movieId(6L).build());
-    }
+//    @Test
+//    public void shouldReturnRepertoireDto() {
+//        Throwable throwable = catchThrowable(() -> repertoireService.add(RepertoireDto.builder().id(1L).date(LocalDate.of(1992, 3, 2)).time(LocalTime.of(12, 12))
+//                .movieId(5L)
+//                .build()));
+//        assertThat(throwable).isInstanceOf(AppException.class);
+//    }
+//
+//    @Test
+//    public void shouldReturnExceptionWhenMovieIdNotexist() {
+//        RepertoireDto result = repertoireService.add(RepertoireDto.builder().id(1L).date(LocalDate.of(1992, 3, 2)).time(LocalTime.of(12, 12))
+//                .movieId(6L)
+//                .build());
+//
+//        assertThat(result).isEqualTo(RepertoireDto.builder().id(1L).date(LocalDate.of(1992, 3, 2)).time(LocalTime.of(12, 12)).movieId(6L).build());
+//    }
 
     @Test
     public void shouldReturnExceptionWhenRepertoireIdNull() {

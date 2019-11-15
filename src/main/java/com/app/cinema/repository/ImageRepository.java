@@ -8,4 +8,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     List<Image> findByMovieId(Long movieId);
 
+    List<Image> findByMovieIdIn(List<Long> movieIds);
+
 }

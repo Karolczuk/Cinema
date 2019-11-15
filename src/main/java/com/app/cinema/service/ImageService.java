@@ -36,4 +36,10 @@ public class ImageService {
                 .collect(Collectors.toList());
     }
 
+    public List<ImageDto> findImagesByMovieIdIn(List<Long> movieIds) {
+        return imageRepository.findByMovieIdIn(movieIds)
+                .stream()
+                .map(ModelMapper:: fromImageToImageDto)
+                .collect(Collectors.toList());
+    }
 }

@@ -76,7 +76,7 @@ public class RepertoireService {
 
         repertoire.setMovie(movie);
 
-        repertoire.setDate(repertoireDto.getDate());
+        repertoire.setDate(LocalDate.parse(repertoireDto.getDate()));
 
         return ModelMapper.fromRepertoireToRepertoireDto(repertoireRepository.save(repertoire));
 

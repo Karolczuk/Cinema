@@ -16,6 +16,7 @@ public class RepertoireDto {
 
     private Long id;
     private Long movieId;
-    private LocalDate date;
+//    private LocalDate date;
+    private String date;
     private LocalTime time;
 }

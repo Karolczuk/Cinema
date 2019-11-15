@@ -1,6 +1,5 @@
 package com.app.cinema.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -8,6 +7,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 @Configuration
 public class AppConfig {
@@ -33,7 +35,14 @@ public class AppConfig {
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 
         return new CorsFilter(urlBasedCorsConfigurationSource);
+    }
 
-
+    @Bean
+    public TemplateEngine templateEngine(){
+        TemplateEngine templateEngine = new TemplateEngine();
+        StringTemplateResolver stringTemplateResolver = new StringTemplateResolver();
+        stringTemplateResolver.setTemplateMode(TemplateMode.HTML);
+        templateEngine.addTemplateResolver(stringTemplateResolver);
+        return templateEngine;
     }
 }

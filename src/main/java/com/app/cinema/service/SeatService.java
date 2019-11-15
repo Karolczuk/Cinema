@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,16 +33,21 @@ public class SeatService {
     private final RepertoireRepository repertoireRepository;
     private  final UserRepository userRepository;
 
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+
     public SeatDto add(SeatDto seatDto) {
 
         if (seatDto == null) {
             throw new AppException("add seat exception - seat object is null");
         }
 
-        // Optional<Repertoire> optionalRepertoire = repertoireRepository.findByMovieIdAndDateAndTime(seatDto.getMovieId(), seatDto.getDate(), seatDto.getTime());
+//         Optional<Repertoire> optionalRepertoire = repertoireRepository.findByMovieIdAndDateAndTime(seatDto.getMovieId(), seatDto.getDate(), seatDto.getTime());
         //        List<Reservation> optionalReservations = reservationRepository.findByTimeAndDateAndMovieId(seatDto.getTime(), seatDto.getDate(), seatDto.getMovieId());
 //        var seat = ModelMapper.fromSeatDtoToSeat(seatDto);
-        Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(seatDto.getRepertoireDto().getDate(), seatDto.getRepertoireDto().getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), seatDto.getRepertoireDto().getMovieId());
+        Optional<Repertoire> byId = repertoireRepository.findById(seatDto.getRepertoireDto().getId());
+
+
+        Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(LocalDate.parse(seatDto.getRepertoireDto().getDate(),formatter), seatDto.getRepertoireDto().getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), seatDto.getRepertoireDto().getMovieId());
         if (optionalSeat.isPresent()) {
             throw new AppException("Someone reserved this seat");
         }

@@ -6,10 +6,7 @@ import com.app.cinema.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,10 @@ public class ImageController {
     @GetMapping("/all/{page}/{size}")
     public Page<ImageDto> findAll(@PathVariable Integer page, @PathVariable Integer size) {
         return imageService.findAll(PageRequest.of(page, size));
+    }
+
+    @GetMapping
+    public List<ImageDto> findImagesByMovieIdIn(@RequestParam List<Long> movieIds) {
+        return imageService.findImagesByMovieIdIn(movieIds);
     }
 }

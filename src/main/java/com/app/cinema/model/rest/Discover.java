@@ -16,4 +16,5 @@ public class Discover {
     private List<MovieDetails> results;
     private Integer total_results;
     private Integer total_pages;
+
 }
