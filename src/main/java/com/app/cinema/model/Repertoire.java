@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"movie_id","time","date"})})
 public class Repertoire {
 
     @Id

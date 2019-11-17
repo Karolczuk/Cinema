@@ -31,9 +31,10 @@ public class SeatService {
     private final SeatRepository seatRepository;
     private final MovieRepository movieRepository;
     private final RepertoireRepository repertoireRepository;
-    private  final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+    //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
 
     public SeatDto add(SeatDto seatDto) {
 
@@ -45,31 +46,40 @@ public class SeatService {
         //        List<Reservation> optionalReservations = reservationRepository.findByTimeAndDateAndMovieId(seatDto.getTime(), seatDto.getDate(), seatDto.getMovieId());
 //        var seat = ModelMapper.fromSeatDtoToSeat(seatDto);
         Optional<Repertoire> byId = repertoireRepository.findById(seatDto.getRepertoireDto().getId());
-        boolean present = byId.isPresent();
 
-//        if (byId.isPresent()) {
-//            byId.get();
-//            Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(LocalDate.parse(seatDto.getRepertoireDto().getDate(), formatter), seatDto.getRepertoireDto().getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), seatDto.getRepertoireDto().getMovieId());
+        if (!byId.isPresent()) {
+            throw new AppException("repertoire doesn't exist");
+        }
+        Repertoire repertoire = byId.get();
+        RepertoireDto repertoireDto = ModelMapper.fromRepertoireToRepertoireDto(repertoire);
 
+        Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(
+                LocalDate.parse(repertoireDto.getDate(), formatter), repertoireDto.getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), repertoireDto.getMovieId());
 
-        Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(LocalDate.parse(seatDto.getRepertoireDto().getDate(),formatter), seatDto.getRepertoireDto().getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), seatDto.getRepertoireDto().getMovieId());
-            if (optionalSeat.isPresent()) {
-                throw new AppException("Someone reserved this seat");
-            }
-            var seat = ModelMapper.fromSeatDtoToSeat(seatDto);
+//        Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(LocalDate.parse(seatDto.getRepertoireDto().getDate(),formatter), seatDto.getRepertoireDto().getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), seatDto.getRepertoireDto().getMovieId());
+        if (optionalSeat.isPresent()) {
+            throw new AppException("Someone reserved this seat");
+        }
+        var seat = ModelMapper.fromSeatDtoToSeat(seatDto);
 
-            Optional<User> optionalUser = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());// pobieamy nazwe uzytkownika z kontejstu security, kontext security - kontekst w ktorym przetrzymuje akualnego uzytkownika ktory przedtswił sie tokenem
-            if (!optionalUser.isPresent()) {
-                throw new AppException("User doe not exist");
-            }
-            seat.setUser(optionalUser.get());
-            return ModelMapper.fromSeatToSeatDto(seatRepository.save(seat));
-//        }
-//        throw new AppException("Repertoire doesn' exist");
+        Optional<User> optionalUser = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());// pobieamy nazwe uzytkownika z kontejstu security, kontext security - kontekst w ktorym przetrzymuje akualnego uzytkownika ktory przedtswił sie tokenem
+        if (!optionalUser.isPresent()) {
+            throw new AppException("User doe not exist");
+        }
+        seat.setUser(optionalUser.get());
+        return ModelMapper.fromSeatToSeatDto(seatRepository.save(seat));
+
     }
 
     public List<SeatDto> findAll(LocalDate date, String time, Long movieId) {
         return seatRepository.findByRepertoireDateAndRepertoireTimeAndRepertoireMovieId(date, LocalTime.parse(time), movieId)
+                .stream()
+                .map(ModelMapper::fromSeatToSeatDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<SeatDto> findByRepertoireId(Long repertoireId) {
+        return seatRepository.findByRepertoireId(repertoireId)
                 .stream()
                 .map(ModelMapper::fromSeatToSeatDto)
                 .collect(Collectors.toList());

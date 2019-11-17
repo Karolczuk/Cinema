@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public interface ModelMapper {
 
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MM-yyyy");
+//static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
 
     static MovieDto fromMovieToMovieDto(Movie movie) {
         return movie == null ? null : MovieDto.builder()
@@ -142,7 +143,7 @@ public interface ModelMapper {
         return repertoireDto == null ? null : Repertoire.builder()
                 .id(repertoireDto.getId())
                 .time(repertoireDto.getTime())
-                .date(LocalDate.parse(repertoireDto.getDate(),formatter))
+                .date(repertoireDto.getDate() != null ? LocalDate.parse(repertoireDto.getDate(),formatter) : null)
 
                 //     .movie(repertoireDto.)
                 //.movieId(repertoireDto.getMovieId())
