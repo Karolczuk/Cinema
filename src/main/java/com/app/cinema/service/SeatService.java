@@ -84,6 +84,8 @@ public class SeatService {
                 .map(ModelMapper::fromSeatToSeatDto)
                 .collect(Collectors.toList());
     }
+
+
 }
 
 

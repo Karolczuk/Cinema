@@ -2,7 +2,6 @@ package com.app.cinema.service;
 
 import com.app.cinema.dto.UserDto;
 import com.app.cinema.exceptions.AppException;
-import com.app.cinema.model.Role;
 import com.app.cinema.model.User;
 import com.app.cinema.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,4 +40,39 @@ public class UserService {
     }
 
 
+    public void delete(Long id) {
+
+        if (id == null) {
+            throw new AppException("User  id is null");
+        }
+        User user = userRepository.findById(id).orElseThrow(() -> new AppException("User service - delete - no user with id " + id));
+        userRepository.deleteById(id);
+    }
+
+    public UserDto update(Long id, UserDto userDto) {
+
+        if (id == null) {
+            throw new AppException("update userDto exception - id is null");
+        }
+        return userRepository
+                .findById(id)
+                .map(u -> {
+
+                    u.setUsername(userDto.getUsername() == null ? u.getUsername() : userDto.getUsername());
+                    u.setEmail(userDto.getEmail() == null ? u.getEmail() : userDto.getEmail());
+
+                    return ModelMapper.fromUserToUserDto(userRepository.save(u));
+                }).orElseThrow(() -> new AppException("User service - update - cannot update user with id " + userDto.getId()));
+    }
+
+
+    public UserDto updateCurrentUser(String username, String email) {
+
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow(() -> new AppException("User is not logged"));
+        user.setUsername(username);
+        user.setEmail(email);
+
+        return ModelMapper.fromUserToUserDto(userRepository.save(user));
+    }
 }
+

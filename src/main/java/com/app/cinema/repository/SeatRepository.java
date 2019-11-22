@@ -23,4 +23,6 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
     List<Seat> findByRepertoireDateAndRepertoireTimeAndRepertoireMovieId(LocalDate date, LocalTime time, Long movieId);
 
     List<Seat> findByRepertoireId(Long repertoireId);
+
+    List<Seat> findByRepertoireIdAndUserUsername(Long repertoireId, String username);
 }

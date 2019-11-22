@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -54,10 +55,10 @@ public class SecurityService {
         var user = User.builder()
                 .username(registrationUser.getUsername())
                 .password(passwordEncoder.encode(registrationUser.getPassword()))
-              //  .roles(roles)
+               // .roles(roles)
                 .build();
 
-        roleRepository.findByName("USER").ifPresent(r->user.setRoles(Collections.singleton(r)));
+        roleRepository.findByName("ROLE_USER").ifPresent(r->user.setRoles(Collections.singleton(r)));
 
         var insertedUser = userRepository.save(user);
         return "User " + insertedUser.getUsername() + " has been registered";

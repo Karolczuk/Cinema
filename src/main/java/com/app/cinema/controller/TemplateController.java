@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/templates")
@@ -42,15 +44,25 @@ public class TemplateController {
         templateService.deleteById(id);
     }
 
-    @PostMapping("/download")
-    public ResponseEntity<byte[]> downloadFile(@RequestBody TemplateDto templateDto) {
+    @PostMapping("/download/{repertoireId}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long repertoireId) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Content-Type", "application/pdf");
-        byte[] bytes = templateService.generateTicket(1L);
+        byte[] bytes = templateService.generateTicket(repertoireId);
         httpHeaders.set("Content-Length", String.valueOf(bytes.length));
         httpHeaders.set("Content-Disposition", "attachment;filename=ticket.pdf");
         return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.CREATED);
     }
 
+
+//    @PostMapping("/download/{repertoireId}")
+//    public ResponseEntity<String> downloadFile(@PathVariable Long repertoireId) {
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.set("Content-Type", "application/pdf");
+//        byte[] bytes = templateService.generateTicket(repertoireId);
+//        httpHeaders.set("Content-Length", String.valueOf(bytes.length));
+//        httpHeaders.set("Content-Disposition", "attachment;filename=ticket.pdf");
+//        return new ResponseEntity<>(Base64.getEncoder().encodeToString(bytes), httpHeaders, HttpStatus.CREATED);
+//    }
 }
 

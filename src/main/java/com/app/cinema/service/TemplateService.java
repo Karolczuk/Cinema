@@ -3,7 +3,11 @@ package com.app.cinema.service;
 import com.app.cinema.dto.MovieDto;
 import com.app.cinema.dto.TemplateDto;
 import com.app.cinema.exceptions.AppException;
+import com.app.cinema.model.Movie;
+import com.app.cinema.model.Seat;
 import com.app.cinema.model.Template;
+import com.app.cinema.model.User;
+import com.app.cinema.repository.SeatRepository;
 import com.app.cinema.repository.TemplateRepository;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -13,11 +17,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.swing.text.html.StyleSheet;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
@@ -31,19 +37,29 @@ public class TemplateService {
 
     private final TemplateRepository templateRepository;
     private final TemplateEngine templateEngine;
+    private final SeatRepository seatRepository;
 
 
     public byte[] generateTicket(Long reservationId) {
         Template ticket = templateRepository.findByName("TICKET");
+        List<Seat> byRepertoireIdAndUserName = seatRepository.findByRepertoireIdAndUserUsername(reservationId, SecurityContextHolder.getContext().getAuthentication().getName());
+        if (byRepertoireIdAndUserName.isEmpty()) {
+            throw new AppException("Seat or User doesn't exist");
+        }
+        User user = byRepertoireIdAndUserName.get(0).getUser();
+        Movie movie = byRepertoireIdAndUserName.get(0).getRepertoire().getMovie();
         Context context = new Context();
-        context.setVariable("name", "Pies");
-        String process = templateEngine.process(ticket.getBody(), context);
+        context.setVariable("user", user);
+        context.setVariable("movie", movie);
+        context.setVariable("seats",byRepertoireIdAndUserName);
+        String process = templateEngine.process(ticket.getBody(), context); // generuje html
         Document document = new Document(); // do generowai pdf
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             PdfWriter.getInstance(document, byteArrayOutputStream);
             document.open();
             HTMLWorker htmlWorker = new HTMLWorker(document);
+//            XMLWorkerHelper.getInstance().parseXHtml()
             htmlWorker.parse(new StringReader(process));
             document.close();
         } catch (Exception e) {
@@ -96,7 +112,6 @@ public class TemplateService {
         var template = templateRepository
                 .findById(id)
                 .orElseThrow(() -> new AppException("update template exception - no template with id " + id));
-
         template.setBody(templateDto.getBody());
         template.setName(templateDto.getName());
 

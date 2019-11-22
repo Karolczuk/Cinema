@@ -71,7 +71,9 @@ public interface ModelMapper {
                 .email(user.getEmail())
                 .name(user.getName())
                 .surname(user.getSurname())
-                .roles(user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet()))
+                .password(user.getPassword())
+                .passwordConfirmation(user.getPasswordConfirmation())
+            .roles(user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet()))
 //                .password(user.getPassword())
                 .username(user.getUsername())
                 .build();
