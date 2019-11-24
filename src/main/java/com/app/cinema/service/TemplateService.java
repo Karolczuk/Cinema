@@ -1,6 +1,5 @@
 package com.app.cinema.service;
 
-import com.app.cinema.dto.MovieDto;
 import com.app.cinema.dto.TemplateDto;
 import com.app.cinema.exceptions.AppException;
 import com.app.cinema.model.Movie;
@@ -10,7 +9,6 @@ import com.app.cinema.model.User;
 import com.app.cinema.repository.SeatRepository;
 import com.app.cinema.repository.TemplateRepository;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +47,7 @@ public class TemplateService {
         }
         User user = byRepertoireIdAndUserName.get(0).getUser();
         Movie movie = byRepertoireIdAndUserName.get(0).getRepertoire().getMovie();
-        Context context = new Context();
+        Context context = new Context(Locale.forLanguageTag("pl-PL"));
         context.setVariable("user", user);
         context.setVariable("movie", movie);
         context.setVariable("seats",byRepertoireIdAndUserName);

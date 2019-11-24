@@ -23,8 +23,8 @@ public class MovieDto {
     private Long id;
     private String title;
     private Integer duration;
-    @JsonFormat(pattern = "dd.MM.yyyy")
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @JsonFormat(pattern = "d.MM.yyyy")
+    @DateTimeFormat(pattern = "d.MM.yyyy")
     private LocalDate releaseDate;
     private BigDecimal price;
     private String description;

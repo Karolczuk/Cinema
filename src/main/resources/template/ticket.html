@@ -8,8 +8,26 @@
     <script src="/webjars/jquery/3.4.0/jquery.min.js"></script>
     <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
-<body>
-<p>Ala</p>
-
+<div th:text="user.name"></div>
+<div class="container" style="margin-left: 30%; margin-right: 30%">
+    <h1>Rezerwacja biletów</h1>
+    <h5>Kupujący: Magdalena Karolczuk</h5>
+    <p>Szanowna(y) Pani(e), przesyłamy podsumowanie dotyczące zarejestrowanej przez Ciebie rezerwacji biletów.
+    <p>Kino Atlantic ul. Chmielna 33 00-021 Warszawa Twoje bilety:</p>
+    <div th:text="movie.title"></div>
+    <p>Data: 14.11.2019, godzina: 20:40</p>
+    <p>Sala: Sala D</p>
+    <p>Bilety:</p>
+<tr th:each="seat : ${seats}">
+    <div class="row">
+        <td><span th:text="${seat.getRowNumber()}">Row</span></td>
+        <td><span th:text="${seat.getColumnNumber()}"> Column </span></td>
+        <td><span th:text="${seat.getRepertoire().movie.getTitle()}"> Title </span></td>
+    </div>
+</tr>
+<p>Miejsce: 1, rząd: 6, bilet: REZERWACJA </p>
+</p>
+</div>
 </body>
 </html>
+
