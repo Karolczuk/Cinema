@@ -30,5 +30,6 @@ public class MovieDto {
     private String description;
     private Set<String> genres;
     private DiscoverDto discoverDto;
+    private List<ImageDto> imageDtos;
 
 }

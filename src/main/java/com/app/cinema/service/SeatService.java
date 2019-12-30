@@ -53,7 +53,7 @@ public class SeatService {
         Repertoire repertoire = byId.get();
         RepertoireDto repertoireDto = ModelMapper.fromRepertoireToRepertoireDto(repertoire);
 
-        Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(
+        Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnCountAndRowCountAndRepertoireMovieId(
                 LocalDate.parse(repertoireDto.getDate(), formatter), repertoireDto.getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), repertoireDto.getMovieId());
 
 //        Optional<Seat> optionalSeat = seatRepository.findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(LocalDate.parse(seatDto.getRepertoireDto().getDate(),formatter), seatDto.getRepertoireDto().getTime(), seatDto.getColumnNumber(), seatDto.getRowNumber(), seatDto.getRepertoireDto().getMovieId());

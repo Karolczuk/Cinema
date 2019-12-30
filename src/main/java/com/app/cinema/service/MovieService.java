@@ -2,9 +2,13 @@ package com.app.cinema.service;
 
 import com.app.cinema.dto.MovieDto;
 import com.app.cinema.exceptions.AppException;
+import com.app.cinema.model.Genre;
+import com.app.cinema.model.Image;
 import com.app.cinema.model.Movie;
+import com.app.cinema.repository.GenreRepository;
 import com.app.cinema.repository.MovieRepository;
 import com.app.cinema.validator.MovieValidator;
+import io.swagger.models.Model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Temporal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,15 +27,24 @@ import java.util.stream.Collectors;
 public class MovieService {
 
     private final MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
 
-    public Page<MovieDto> findAll(Pageable pageable) {
-        Page<Movie> moviePage = movieRepository.findAll(pageable);
+    public Page<MovieDto> findAll(Pageable pageable, String movieTitle) {
+        Page<Movie> moviePage = null;
+        if (movieTitle!=null) {
+            moviePage = movieRepository.findByTitleContaining(movieTitle, pageable);
+        }
+        else{
+            moviePage = movieRepository.findAll(pageable);
+
+        }
         List<MovieDto> movies = moviePage.getContent()
                 .stream()
                 .map(ModelMapper::fromMovieToMovieDto)
                 .collect(Collectors.toList());
         return new PageImpl<>(movies, moviePage.getPageable(), moviePage.getTotalElements());
-    }
+
+        }
 
 
     public MovieDto findOne(Long id) {
@@ -57,8 +71,16 @@ public class MovieService {
 //        if (movieValidator.hasErrors()) {
 //            throw new AppException(errors.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
 //        }
-
         var movie = ModelMapper.fromMovieDtoToMovie(movieDto);
+        movie.setTitle(movieDto.getTitle());
+        movie.setDescription(movieDto.getDescription());
+        movie.setReleaseDate(movieDto.getReleaseDate());
+        List<Genre> byNameIn = genreRepository.findByNameIn(movieDto.getGenres());
+        movie.setGenres(byNameIn);
+        // movie.setGenres(movieDto.getGenres().stream().map(g -> Genre.builder().name(g).build()).collect(Collectors.toList()));
+
+        // movie.setDuration(movieDto.getDuration());
+        //   movie.setImages(movieDto.getImageDtos().stream().map(ModelMapper::fromImageDtoToImage).collect(Collectors.toList()));
         return ModelMapper.fromMovieToMovieDto(movieRepository.save(movie));
 
     }
@@ -94,4 +116,12 @@ public class MovieService {
         movieRepository.deleteById(id);
 
     }
+
+
+//    public Page<MovieDto> findMovie(String title, Pageable pageable) {
+//        List<Movie> collect = movieRepository.findByTitleContaining(title,pageable).stream()
+//                .collect(Collectors.toList());
+//        return new PageImpl<>(collect, moviePage.getPageable(), moviePage.getTotalElements());
+
+//}
 }

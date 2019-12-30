@@ -114,8 +114,8 @@ public interface ModelMapper {
     static SeatDto fromSeatToSeatDto(Seat seat) {
         return seat == null ? null : SeatDto.builder()
                 .id(seat.getId())
-                .columnNumber(seat.getColumnNumber())
-                .rowNumber(seat.getRowNumber())
+                .columnNumber(seat.getColumnCount())
+                .rowNumber(seat.getRowCount())
                 .build();
     }
 
@@ -123,8 +123,8 @@ public interface ModelMapper {
     static Seat fromSeatDtoToSeat(SeatDto seatDto) {
         return seatDto == null ? null : Seat.builder()
                 .id(seatDto.getId())
-                .columnNumber(seatDto.getColumnNumber())
-                .rowNumber(seatDto.getRowNumber())
+                .columnCount(seatDto.getColumnNumber())
+                .rowCount(seatDto.getRowNumber())
                 .repertoire(seatDto.getRepertoireDto() == null ? null : fromRepertoireDtoToRepertoire(seatDto.getRepertoireDto()))
                 .build();
     }
@@ -155,23 +155,23 @@ public interface ModelMapper {
     }
 
 
-    static ReviewDto fromReviewToReviewDto(Review review) {
-        return review == null ? null : ReviewDto.builder()
-                .id(review.getId())
-                .movieId(review.getMovie().getId())
-                .userId(review.getUser().getId())
-                .description(review.getDescription())
-                //.userDto(review.getUser() == null ? null : fromUserToUserDto(review.getUser()))
-                .build();
-    }
-
-    static Review fromReviewDtoToReview(ReviewDto reviewDto) {
-        return reviewDto == null ? null : Review.builder()
-                .id(reviewDto.getId())
-                .description(reviewDto.getDescription())
-                .build();
-
-    }
+//    static ReviewDto fromReviewToReviewDto(Review review) {
+//        return review == null ? null : ReviewDto.builder()
+//                .id(review.getId())
+//                .movieId(review.getMovie().getId())
+//                .userId(review.getUser().getId())
+//                .description(review.getDescription())
+//                //.userDto(review.getUser() == null ? null : fromUserToUserDto(review.getUser()))
+//                .build();
+//    }
+//
+//    static Review fromReviewDtoToReview(ReviewDto reviewDto) {
+//        return reviewDto == null ? null : Review.builder()
+//                .id(reviewDto.getId())
+//                .description(reviewDto.getDescription())
+//                .build();
+//
+//    }
 
     static Template fromTemplateDtoToTemplate(TemplateDto templateDto) {
         return templateDto == null ? null : Template.builder()

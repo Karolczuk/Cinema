@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/movies")
@@ -16,9 +18,17 @@ public class MovieController {
 
 
     @GetMapping("/{page}/{size}")
-    public Page<MovieDto> findAllMovie(@PathVariable Integer page, @PathVariable Integer size) {
-        return movieService.findAll(PageRequest.of(page, size));
+    public Page<MovieDto> findAllMovie(@PathVariable Integer page, @PathVariable Integer size, @RequestParam(required = false) String movieTitle) {
+        return movieService.findAll(PageRequest.of(page, size),movieTitle);
     }
+
+
+//    @GetMapping("/title/{title}")
+//    public List<MovieDto> findMovieByTitle(@PathVariable String title) {
+//
+//        return movieService.findAll(title);
+//
+//    }
 
     @GetMapping("/{id}")
     public MovieDto findOne(@PathVariable Long id) {
@@ -42,6 +52,9 @@ public class MovieController {
     public void delete(@PathVariable Long id) {
         movieService.deleteById(id);
     }
+
+
+
 
 }
 

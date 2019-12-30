@@ -22,7 +22,7 @@ public class UserDto {
     private String password;
     private String passwordConfirmation;
     private SeansDto seansDto;
-    private CardDto loyaltyCardDto;
+//    private CardDto loyaltyCardDto;
     private ReviewDto reviewDto;
     private Set<String> roles;
 }

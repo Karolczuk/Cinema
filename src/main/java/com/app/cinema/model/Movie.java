@@ -23,9 +23,9 @@ public class Movie {
     @Id
     @GeneratedValue
     private Long id;
-
+    @Column(unique = true)
     private String title;
-//    @ElementCollection
+    //    @ElementCollection
 //    private List<String> genre;
     private Integer duration;
     private LocalDate releaseDate;
@@ -41,10 +41,10 @@ public class Movie {
     @JsonBackReference
     private List<Video> videos;
 
-    @OneToMany(mappedBy = "movie")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Set<SalesStand> salesStands;
+//    @OneToMany(mappedBy = "movie")
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Set<SalesStand> salesStands;
 
 //    @OneToMany(mappedBy = "movie")
 //    @EqualsAndHashCode.Exclude
@@ -66,10 +66,10 @@ public class Movie {
     @ToString.Exclude
     private Set<Repertoire> repertoires;
 
-    @OneToMany(mappedBy = "movie")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Set<Review> reviews;
+//    @OneToMany(mappedBy = "movie")
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Set<Review> reviews;
 
 }
 

@@ -38,23 +38,20 @@ public class User {
     @EqualsAndHashCode.Exclude
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "user")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Set<SalesStand> salesStands;
-
 //    @OneToMany(mappedBy = "user")
 //    @EqualsAndHashCode.Exclude
 //    @ToString.Exclude
-//    private Set<Reservation> bookings;
+//    private Set<SalesStand> salesStands;
 
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<Review> reviews;
 
-    @OneToOne(mappedBy = "user")
-    private Card loyaltyCard;
+
+//    @OneToMany(mappedBy = "user")
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private Set<Review> reviews;
+//
+//    @OneToOne(mappedBy = "user")
+//    private Card loyaltyCard;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
     private Set<Seat> seats;

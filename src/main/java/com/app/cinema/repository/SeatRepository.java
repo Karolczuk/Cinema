@@ -18,11 +18,13 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
     // Optional<Seat> findByDateAndTimeAndAndColumnNumberAndRowNumberAndMovieId(LocalDate date, LocalTime time, Integer column, Integer raw, Long movieId);
 
     // List<Seat> findByDateAndTimeAndMovie_Id(LocalDate date, LocalTime time, Long movieId);
-    Optional<Seat> findByRepertoireDateAndRepertoireTimeAndColumnNumberAndRowNumberAndRepertoireMovieId(LocalDate date, LocalTime time, Integer column, Integer raw, Long movieId);
+    Optional<Seat> findByRepertoireDateAndRepertoireTimeAndColumnCountAndRowCountAndRepertoireMovieId(LocalDate date, LocalTime time, Integer column, Integer raw, Long movieId);
 
     List<Seat> findByRepertoireDateAndRepertoireTimeAndRepertoireMovieId(LocalDate date, LocalTime time, Long movieId);
 
     List<Seat> findByRepertoireId(Long repertoireId);
 
+
     List<Seat> findByRepertoireIdAndUserUsername(Long repertoireId, String username);
+
 }
